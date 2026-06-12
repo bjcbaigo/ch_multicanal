@@ -43,7 +43,7 @@ button,input,select{font:inherit}
 .quick:hover{border-color:#91d1e6;background:#fbfdff}.quick.active{border-color:#0078ff;box-shadow:inset 4px 0 0 #0078ff;background:#f6fbff}
 .quick small{display:block;color:var(--muted);font-weight:400;margin-top:2px}
 .content{display:flex;flex-direction:column;gap:14px}
-.side{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.side{display:none}
 .panel-title{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line);font-weight:560;color:var(--navy)}
 .panel-body{padding:12px 14px}
 .metric-row{display:flex;justify-content:space-between;gap:10px;padding:11px 2px;border-bottom:1px solid var(--line2)}.metric-row:last-child{border-bottom:0}
@@ -53,6 +53,10 @@ button,input,select{font:inherit}
 .channel-logo{width:30px;height:30px;border-radius:8px;border:1px solid var(--line2);background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 30px}
 .channel-logo img{width:100%;height:100%;object-fit:contain;padding:3px;display:block}
 .channel-logo.tango img{padding:4px}.channel-logo.ml img{padding:2px}.channel-logo.chemes img{padding:2px}
+.channel-summary{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-left:auto}
+.channel-count{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}
+.channel-count b{font-size:18px;font-weight:560;color:var(--text)}
+.channel-count .channel-logo{width:34px;height:34px;flex-basis:34px}
 .table-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 18px;border-bottom:1px solid var(--line)}
 .table-title{font-size:16px;font-weight:560;color:var(--navy)}.table-title small{display:block;color:var(--muted);font-size:13px;font-weight:400;margin-top:5px}
 .view-options{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px}.toggle{display:flex;align-items:center;gap:7px}
@@ -61,20 +65,21 @@ button,input,select{font:inherit}
 .priority-strip{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0;padding:8px 12px;border:1px solid #fecdd3;border-radius:12px;background:#fff1f2;box-shadow:var(--shadow2);color:#1f2937;min-width:280px;max-width:420px;font-size:12px}
 .priority-strip b{color:var(--red)}
 .priority-strip span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.health-strip{display:grid;grid-template-columns:86px minmax(0,1fr);gap:18px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff 0,#fbfdff 100%)}
+.health-strip{display:grid;grid-template-columns:86px minmax(0,1fr) auto;gap:18px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff 0,#fbfdff 100%)}
 .donut{width:76px;height:76px;border-radius:50%;background:conic-gradient(var(--red) 0deg,var(--red) var(--q),#f59e0b var(--q),#f59e0b var(--c),var(--violet) var(--c),var(--violet) var(--d),var(--blue) var(--d),var(--blue) var(--s),#22c55e var(--s),#22c55e 360deg);display:flex;align-items:center;justify-content:center;position:relative}
 .donut::after{content:"";position:absolute;width:50px;height:50px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--line2)}
 .donut-center{position:relative;z-index:1;text-align:center;line-height:1.05}.donut-center b{display:block;font-size:13px;font-weight:560;color:var(--text)}.donut-center span{font-size:10px;color:var(--muted)}
 .health-legend{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px}.legend-dot{width:9px;height:9px;border-radius:50%;background:var(--dot)}.legend-item b{font-size:13px;font-weight:560;color:var(--text);margin-right:2px}
 .table-wrap{overflow:auto;max-height:calc(100vh - 390px)}
-table{border-collapse:separate;border-spacing:0;width:100%;min-width:1580px}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:1760px}
 th,td{padding:10px 11px;border-bottom:1px solid var(--line2);text-align:right;white-space:nowrap;vertical-align:middle}
 th{position:sticky;top:0;z-index:2;background:#f8fafc;color:#334155;font-size:12px;font-weight:560;text-transform:uppercase;letter-spacing:0}
 th[data-sort]{cursor:pointer;user-select:none}
 th[data-sort]::after{content:"";display:inline-block;margin-left:6px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid #b6c2d1;vertical-align:middle;opacity:.72}
 th.sorted-asc::after{border-top:0;border-bottom:5px solid var(--blue)}
 th.sorted-desc::after{border-top:5px solid var(--blue)}
+.depot-head{display:flex;flex-direction:column;gap:2px;line-height:1.1}.depot-head small{font-size:10px;color:var(--muted2);font-weight:400;text-transform:none}
 th:first-child,td:first-child{position:sticky;left:0;z-index:3;text-align:left;background:#fff;box-shadow:10px 0 18px rgba(30,45,70,.06)}
 th:first-child{background:#f7fbfd;z-index:4}
 tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#fbfdff}
@@ -88,8 +93,8 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
 .stock{font-weight:560}.stock.zero{color:var(--red)}.diff.badtext{color:var(--red);font-weight:560}.diff.warntext{color:var(--amber);font-weight:560}
 .money{color:#24364e}.prices-muted{color:var(--muted2);font-size:12px}.empty{padding:36px;text-align:center;color:var(--muted)}
 .drawer{display:none;padding:10px 14px;background:#fbfcfe;border-bottom:1px solid var(--line2);color:var(--muted);font-size:12px}.drawer b{color:var(--text)}
-.compact .optional{display:none}.compact table{min-width:1280px}
-@media(max-width:1300px){.quick-actions{grid-template-columns:repeat(3,minmax(160px,1fr))}.status-head{grid-template-columns:1fr auto}.refresh{grid-column:1/-1;text-align:left}.side{grid-template-columns:1fr}}
+.compact .optional{display:none}.compact table{min-width:1500px}
+@media(max-width:1300px){.quick-actions{grid-template-columns:repeat(3,minmax(160px,1fr))}.status-head{grid-template-columns:1fr auto}.refresh{grid-column:1/-1;text-align:left}.health-strip{grid-template-columns:86px 1fr}.channel-summary{grid-column:1/-1;margin-left:0}}
 @media(max-width:1100px){.top-inner{align-items:stretch;flex-direction:column}.filters{grid-template-columns:1fr 1fr}.search{grid-column:1/-1}.kpis{grid-template-columns:repeat(2,1fr)}.quick-actions{grid-template-columns:1fr}.table-wrap{max-height:none}.priority-strip{max-width:none}}
 @media(max-width:640px){.wrap{padding:12px}.top-inner{padding:12px}.brand{min-width:0}.brand-logo{width:42px;height:42px}.filters{grid-template-columns:1fr}.kpis{grid-template-columns:1fr}.status-head{grid-template-columns:1fr}table{min-width:900px}.article{min-width:280px}}
 </style>
@@ -157,22 +162,6 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
     </section>
 
     <section class="content">
-      <aside class="side">
-        <section class="data-panel">
-          <div class="panel-title">Resumen</div>
-          <div class="panel-body" id="summary"></div>
-        </section>
-        <section class="data-panel">
-          <div class="panel-title">Canales</div>
-          <div class="panel-body">
-            <div class="channel-card"><span class="channel-logo chemes"><img src="assets/canales/chemes-web.png" alt="Chemes Web"></span><div><b>Prestashop</b><span>articulos publicados</span></div><div class="value" id="cPresta">-</div></div>
-            <div class="channel-card"><span class="channel-logo"><img src="assets/canales/producteca.png" alt="Producteca"></span><div><b>BNA Producteca</b><span>articulos publicados</span></div><div class="value" id="cBna">-</div></div>
-            <div class="channel-card"><span class="channel-logo ml"><img src="assets/canales/mercadolibre.png" alt="Mercado Libre"></span><div><b>MercadoLibre</b><span>preparado para monitoreo</span></div><div class="value" id="cMl">-</div></div>
-            <div class="channel-card"><span class="channel-logo tango"><img src="assets/canales/tango.png" alt="Tango"></span><div><b>TANGO</b><span>referencia de stock y precios</span></div><div class="value">-</div></div>
-          </div>
-        </section>
-      </aside>
-
       <section class="data-panel" id="tablePanel">
         <div class="table-head">
           <div class="table-title">Articulos a revisar<small id="resultText">Cargando datos...</small></div>
@@ -186,6 +175,12 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
             <div class="donut-center"><b id="donutTotal">-</b><span>totales</span></div>
           </div>
           <div class="health-legend" id="healthLegend"></div>
+          <div class="channel-summary" aria-label="Canales publicados">
+            <span class="channel-count"><span class="channel-logo chemes"><img src="assets/canales/chemes-web.png" alt="Prestashop"></span><b id="cPresta">-</b>Prestashop</span>
+            <span class="channel-count"><span class="channel-logo"><img src="assets/canales/producteca.png" alt="BNA Producteca"></span><b id="cBna">-</b>BNA</span>
+            <span class="channel-count"><span class="channel-logo ml"><img src="assets/canales/mercadolibre.png" alt="Mercado Libre"></span><b id="cMl">-</b>MercadoLibre</span>
+            <span class="channel-count"><span class="channel-logo tango"><img src="assets/canales/tango.png" alt="TANGO"></span><b>-</b>TANGO</span>
+          </div>
         </div>
         <div class="table-wrap">
           <table>
@@ -194,10 +189,12 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
                 <th data-sort="COD_ARTICU">Articulo</th>
                 <th data-sort="Estado_Monitoreo">Estado</th>
                 <th>Canales</th>
-                <th data-sort="Stock_Disponible_CD">Disp. CD</th>
-                <th data-sort="Stock_Comprometido_CD">Comp. CD</th>
-                <th data-sort="Stock_Disponible_CA">Disp. CA</th>
-                <th data-sort="Stock_Comprometido_CA">Comp. CA</th>
+                <th data-sort="Stock_Disponible_CD"><span class="depot-head">Disp. CD<small>Centro distribucion</small></span></th>
+                <th data-sort="Stock_Comprometido_CD"><span class="depot-head">Comp. CD<small>Centro distribucion</small></span></th>
+                <th data-sort="Stock_Disponible_CA"><span class="depot-head">Disp. CA<small>Deposito Candioti</small></span></th>
+                <th data-sort="Stock_Comprometido_CA"><span class="depot-head">Comp. CA<small>Deposito Candioti</small></span></th>
+                <th data-sort="Stock_Disponible_SV"><span class="depot-head">Disp. SV<small>Saldos venta verde</small></span></th>
+                <th data-sort="Stock_Comprometido_SV"><span class="depot-head">Comp. SV<small>Saldos venta verde</small></span></th>
                 <th data-sort="Saldo_Real">Total disp.</th>
                 <th data-sort="Stock_Comprometido_Total">Comp. total</th>
                 <th data-sort="Ventas_Ultimos_30_Dias">Ventas 30d</th>
@@ -215,7 +212,7 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
                 <th class="optional">Fecha stock</th>
               </tr>
             </thead>
-            <tbody id="rows"><tr><td colspan="22" class="empty">Cargando CSV...</td></tr></tbody>
+            <tbody id="rows"><tr><td colspan="24" class="empty">Cargando CSV...</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -226,7 +223,7 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
 <script>
 const APP_SCRIPT_DATA_URL="";
 const PRODUCT_IMAGE_BASE="assets/productos";
-const state={rows:[],filtered:[],sort:{key:"",dir:1}};
+const state={rows:[],filtered:[],imageMap:{},sort:{key:"",dir:1}};
 const $=id=>document.getElementById(id);
 const num=v=>Number(String(v??"").replace(",",".")||0);
 const int=v=>num(v).toLocaleString("es-AR",{maximumFractionDigits:0});
@@ -274,8 +271,10 @@ function productImageUrl(sku){
 function productThumb(r){
   const sku=String(r.COD_ARTICU||"").trim();
   const url=productImageUrl(sku);
+  const fallback=state.imageMap[sku] || "";
   if(!url)return `<div class="thumb-missing">SIN</div>`;
-  return `<img class="thumb" src="${esc(url)}" alt="${esc(sku)}" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb-missing&quot;>SIN</div>'">`;
+  const fallbackAttr=fallback ? ` data-fallback="${esc(fallback)}"` : "";
+  return `<img class="thumb" src="${esc(url)}" alt="${esc(sku)}" loading="lazy"${fallbackAttr} onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.outerHTML='<div class=&quot;thumb-missing&quot;>SIN</div>'}">`;
 }
 function setQuick(value){
   $("estado").value=value;
@@ -301,7 +300,7 @@ function visibleCountWhere(rows,fn){return rows.filter(fn).length}
 function sortRows(rows){
   if(!state.sort.key)return rows;
   const key=state.sort.key, dir=state.sort.dir;
-  const numericKeys=new Set(["Stock_Disponible_CD","Stock_Comprometido_CD","Stock_Disponible_CA","Stock_Comprometido_CA","Saldo_Real","Stock_Comprometido_Total","Ventas_Ultimos_30_Dias","Rotacion_Diaria","Dias_Cobertura","Saldo_Prestashop","Saldo_BNA","Dif_Prestashop_vs_Real","Dif_BNA_vs_Producteca","Precio_Lista_20_Web","Precio_Lista_500_BNA_18CSI","Precio_Lista_501_BNA_EFICI","Precio_Lista_1_Contado"]);
+  const numericKeys=new Set(["Stock_Disponible_CD","Stock_Comprometido_CD","Stock_Disponible_CA","Stock_Comprometido_CA","Stock_Disponible_SV","Stock_Comprometido_SV","Saldo_Real","Stock_Comprometido_Total","Ventas_Ultimos_30_Dias","Rotacion_Diaria","Dias_Cobertura","Saldo_Prestashop","Saldo_BNA","Dif_Prestashop_vs_Real","Dif_BNA_vs_Producteca","Precio_Lista_20_Web","Precio_Lista_500_BNA_18CSI","Precio_Lista_501_BNA_EFICI","Precio_Lista_1_Contado"]);
   return [...rows].sort((a,b)=>{
     if(numericKeys.has(key))return (num(a[key])-num(b[key]))*dir;
     return String(a[key]??"").localeCompare(String(b[key]??""),"es",{numeric:true,sensitivity:"base"})*dir;
@@ -324,8 +323,9 @@ function exportExcel(){
     ["Saldo_BNA","Saldo BNA Producteca"],["Saldo_BNA_Nexo","Saldo BNA NEXO ref."],
     ["Stock_Producteca_CD","Producteca CD"],["Stock_Producteca_SV","Producteca SV"],
     ["Stock_Comprometido_Producteca","Comprometido BNA"],
-    ["Stock_Disponible_CD","Disponible CD"],["Stock_Comprometido_CD","Comprometido CD"],
-    ["Stock_Disponible_CA","Disponible CA"],["Stock_Comprometido_CA","Comprometido CA"],["Stock_Disponible_SV","Disponible SV"],
+    ["Stock_Disponible_CD","Disponible CD - Centro distribucion"],["Stock_Comprometido_CD","Comprometido CD - Centro distribucion"],
+    ["Stock_Disponible_CA","Disponible CA - Deposito Candioti"],["Stock_Comprometido_CA","Comprometido CA - Deposito Candioti"],
+    ["Stock_Disponible_SV","Disponible SV - Saldos venta verde"],["Stock_Comprometido_SV","Comprometido SV - Saldos venta verde"],
     ["Saldo_Real","Total disponible"],["Stock_Comprometido_Total","Comprometido total"],
     ["Ventas_Ultimos_30_Dias","Ventas 30 dias"],["Rotacion_Diaria","Rotacion diaria"],["Dias_Cobertura","Dias cobertura"],
     ["Dif_Prestashop_vs_Real","Dif Presta"],["Dif_BNA_vs_Producteca","Dif BNA Producteca"],["Dif_BNA_Nexo_vs_Producteca","Dif BNA NEXO ref."],
@@ -359,8 +359,6 @@ function render(){
   $("cBna").textContent=int(countWhere(r=>num(r.Publicado_BNA)===1));
   $("cMl").textContent=int(countWhere(r=>num(r.Publicado_MercadoLibre)===1));
 
-  const groups=["QUIEBRE","COBERTURA_BAJA","CANAL_MAYOR_A_TANGO","CANAL_SIN_STOCK","SIN_CANAL_DIGITAL","OK"];
-  $("summary").innerHTML=groups.map(g=>`<div class="metric-row"><span>${badgeEstado(g)}</span><b>${int(countWhere(r=>r.Estado_Monitoreo===g))}</b></div>`).join("");
   $("resultText").textContent=`${int(rows.length)} de ${int(total)} articulos visibles`;
   renderSortIndicators();
 
@@ -388,10 +386,10 @@ function render(){
   $("focusText").textContent=quiebre ? `Prioridad: ${int(quiebre)} articulos con posible quiebre de stock.` : cobertura ? `Prioridad: ${int(cobertura)} articulos con menos de 7 dias de cobertura.` : dif ? `Prioridad: ${int(dif)} diferencias de saldo entre canal y TANGO.` : "Sin alertas criticas en la vista actual.";
   $("priorityStrip").innerHTML=quiebre ? `<span><b>Prioridad:</b> ${int(quiebre)} articulos con posible quiebre de stock.</span><span>&rsaquo;</span>` : cobertura ? `<span><b>Prioridad:</b> ${int(cobertura)} articulos con menos de 7 dias de cobertura.</span><span>&rsaquo;</span>` : dif ? `<span><b>Prioridad:</b> ${int(dif)} diferencias de saldo entre canal y TANGO.</span><span>&rsaquo;</span>` : `<span><b>Prioridad:</b> Sin alertas criticas en la vista actual.</span><span>&rsaquo;</span>`;
 
-  if(!rows.length){$("rows").innerHTML=`<tr><td colspan="22" class="empty">Sin datos para el filtro actual</td></tr>`;return}
+  if(!rows.length){$("rows").innerHTML=`<tr><td colspan="24" class="empty">Sin datos para el filtro actual</td></tr>`;return}
   $("rows").innerHTML=rows.slice(0,1000).map(r=>{
     const dp=num(r.Dif_Prestashop_vs_Real), db=num(r.Dif_BNA_vs_Producteca), real=num(r.Saldo_Real), saldoBna=num(r.Saldo_BNA);
-    const cd=num(r.Stock_Disponible_CD), ca=num(r.Stock_Disponible_CA), compCd=num(r.Stock_Comprometido_CD), compCa=num(r.Stock_Comprometido_CA), compTotal=num(r.Stock_Comprometido_Total), ventas30=num(r.Ventas_Ultimos_30_Dias), rot=num(r.Rotacion_Diaria), cobertura=num(r.Dias_Cobertura);
+    const cd=num(r.Stock_Disponible_CD), ca=num(r.Stock_Disponible_CA), sv=num(r.Stock_Disponible_SV), compCd=num(r.Stock_Comprometido_CD), compCa=num(r.Stock_Comprometido_CA), compSv=num(r.Stock_Comprometido_SV), compTotal=num(r.Stock_Comprometido_Total), ventas30=num(r.Ventas_Ultimos_30_Dias), rot=num(r.Rotacion_Diaria), cobertura=num(r.Dias_Cobertura);
     const psOld=num(r.Prestashop_Desactualizado)===1, psDias=num(r.Dias_Sin_Actualizar_Prestashop), psApi=r.Fuente_Saldo_Prestashop==="PRESTASHOP_API";
     const channels=`<div class="chan">
       <span class="channel-pill chemes ${num(r.Publicado_Prestashop)?"on":""}" title="Prestashop / Chemes Web"><img src="assets/canales/chemes-web.png" alt="Prestashop"></span>
@@ -416,6 +414,8 @@ function render(){
       <td>${int(compCd)}</td>
       <td class="stock ${ca<=0?"zero":""}">${int(ca)}</td>
       <td>${int(compCa)}</td>
+      <td class="stock ${sv<=0?"zero":""}">${int(sv)}</td>
+      <td>${int(compSv)}</td>
       <td class="stock ${real<=0?"zero":""}">${int(real)}</td>
       <td>${int(compTotal)}</td>
       <td>${int(ventas30)}</td>
@@ -436,6 +436,10 @@ function render(){
 }
 async function boot(){
   try{
+    try{
+      const imgRes=await fetch("assets/productos_manifest.json",{cache:"no-store"});
+      if(imgRes.ok)state.imageMap=await imgRes.json();
+    }catch(_){}
     const dataUrl=getDataUrl();
     let csv="";
     if(dataUrl){
@@ -448,7 +452,7 @@ async function boot(){
     state.rows=parseCsv(csv);
     apply();
   }catch(e){
-    $("rows").innerHTML=`<tr><td colspan="22" class="empty">No se pudo leer la fuente de datos configurada</td></tr>`;
+    $("rows").innerHTML=`<tr><td colspan="24" class="empty">No se pudo leer la fuente de datos configurada</td></tr>`;
     $("resultText").textContent="CSV no disponible";
   }
 }
