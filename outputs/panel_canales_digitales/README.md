@@ -45,11 +45,47 @@ $env:CHEMES_SQL_AXOFT_PASSWORD='<password-sql>'
 
 3. Abrir `index.html` desde un servidor local o desde Apps Script/Drive siguiendo el mismo patron usado en la Ticketera/paneles CHEMES.
 
+## Publicacion online con Apps Script
+
+GitHub Pages puede publicar el HTML, pero no debe versionar el CSV operativo. Para alimentar el panel online:
+
+1. Crear un proyecto en Google Apps Script.
+2. Copiar el contenido de `apps_script/Code.gs`.
+3. Configurar una Script Property:
+   - `CHEMES_CANALES_TOKEN`: token privado para aceptar uploads desde el servidor.
+4. Publicar como Web App:
+   - Execute as: el propietario del script.
+   - Who has access: cualquiera con el enlace, o la opcion equivalente disponible en la cuenta.
+5. En el servidor que ejecuta la tarea, configurar:
+
+```powershell
+$env:CHEMES_CANALES_APPSCRIPT_URL='<url-web-app>'
+$env:CHEMES_CANALES_APPSCRIPT_TOKEN='<token-configurado>'
+```
+
+6. La tarea `refresh_canales_digitales.ps1` genera el CSV y, si esas variables existen, ejecuta:
+
+```powershell
+.\publish_canales_csv_appscript.ps1 -CsvPath '..\frontend\out\canales_articulos_publicados.csv'
+```
+
+7. Para GitHub Pages se puede abrir:
+
+```text
+https://bjcbaigo.github.io/ch_multicanal/?dataUrl=<url-web-app>
+```
+
+Tambien se puede dejar fija la URL en `APP_SCRIPT_DATA_URL` dentro de `index.html` si no se quiere usar parametro.
+
 ## Archivos
 
 - `sql/canales_articulos_publicados.sql`: consulta principal.
 - `csv_exports_manifest.csv`: contrato para exportar el CSV.
 - `export_canales_digitales_csvs.ps1`: exportador SQL a CSV separado por `;`.
+- `export_prestashop_live_stock.ps1`: consulta stock vivo Prestashop.
+- `apply_prestashop_live_stock.ps1`: reemplaza saldo Prestashop NEXO por API.
+- `publish_canales_csv_appscript.ps1`: publica el CSV hacia Apps Script.
+- `apps_script/Code.gs`: receptor Apps Script para guardar y servir el CSV.
 - `index.html`: panel frontend autocontenido.
 
 ## Nota de implementacion

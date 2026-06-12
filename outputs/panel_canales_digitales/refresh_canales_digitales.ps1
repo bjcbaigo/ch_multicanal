@@ -29,6 +29,11 @@ try {
   .\export_canales_digitales_csvs.ps1 -OutputDir $outputDir -SqlRoot "." -ManifestPath ".\csv_exports_manifest.csv" *>> $logPath
   .\export_prestashop_live_stock.ps1 -CredentialFile $credentialFile -ApiKeyFile $apiKeyFile -InputCsv $panelCsv -OutputCsv $liveCsv *>> $logPath
   .\apply_prestashop_live_stock.ps1 -PanelCsv $panelCsv -LiveCsv $liveCsv *>> $logPath
+  if (![string]::IsNullOrWhiteSpace($env:CHEMES_CANALES_APPSCRIPT_URL) -and ![string]::IsNullOrWhiteSpace($env:CHEMES_CANALES_APPSCRIPT_TOKEN)) {
+    .\publish_canales_csv_appscript.ps1 -CsvPath $panelCsv *>> $logPath
+  } else {
+    "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] Apps Script no configurado; se omite publicacion online" | Add-Content -LiteralPath $logPath -Encoding UTF8
+  }
 
   "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] OK refresh canales digitales" | Add-Content -LiteralPath $logPath -Encoding UTF8
   exit 0

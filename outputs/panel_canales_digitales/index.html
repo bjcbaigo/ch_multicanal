@@ -195,6 +195,7 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
 </div>
 
 <script>
+const APP_SCRIPT_DATA_URL="";
 const state={rows:[],filtered:[]};
 const $=id=>document.getElementById(id);
 const num=v=>Number(String(v??"").replace(",",".")||0);
@@ -214,6 +215,23 @@ function parseCsv(text){
   const split=line=>{const out=[];let cur="",q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'&&line[i+1]==='"'){cur+='"';i++}else if(ch==='"'){q=!q}else if(ch===";"&&!q){out.push(cur);cur=""}else cur+=ch}out.push(cur);return out};
   const head=split(lines.shift());
   return lines.map(l=>Object.fromEntries(split(l).map((v,i)=>[head[i],v])));
+}
+function getDataUrl(){
+  const params=new URLSearchParams(location.search);
+  return params.get("dataUrl") || APP_SCRIPT_DATA_URL || "";
+}
+function loadJsonp(url){
+  return new Promise((resolve,reject)=>{
+    const callback=`chemesCanalesCb_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    const sep=url.includes("?")?"&":"?";
+    const script=document.createElement("script");
+    const timer=setTimeout(()=>{cleanup();reject(new Error("Timeout Apps Script"))},30000);
+    function cleanup(){clearTimeout(timer);delete window[callback];script.remove()}
+    window[callback]=payload=>{cleanup();payload?.ok?resolve(payload.csv):reject(new Error(payload?.error||"Respuesta Apps Script invalida"))};
+    script.onerror=()=>{cleanup();reject(new Error("No se pudo leer Apps Script"))};
+    script.src=`${url}${sep}callback=${encodeURIComponent(callback)}&t=${Date.now()}`;
+    document.head.appendChild(script);
+  });
 }
 function badgeEstado(e){
   const cls=e==="OK"?"good":e==="QUIEBRE"?"bad":e==="COBERTURA_BAJA"?"warn":e==="CANAL_MAYOR_A_TANGO"?"warn":e==="CANAL_SIN_STOCK"?"info":"neutral";
@@ -337,12 +355,19 @@ function render(){
 }
 async function boot(){
   try{
-    const res=await fetch("out/canales_articulos_publicados.csv",{cache:"no-store"});
-    if(!res.ok)throw new Error("HTTP "+res.status);
-    state.rows=parseCsv(await res.text());
+    const dataUrl=getDataUrl();
+    let csv="";
+    if(dataUrl){
+      csv=await loadJsonp(dataUrl);
+    }else{
+      const res=await fetch("out/canales_articulos_publicados.csv",{cache:"no-store"});
+      if(!res.ok)throw new Error("HTTP "+res.status);
+      csv=await res.text();
+    }
+    state.rows=parseCsv(csv);
     apply();
   }catch(e){
-    $("rows").innerHTML=`<tr><td colspan="22" class="empty">No se pudo leer out/canales_articulos_publicados.csv</td></tr>`;
+    $("rows").innerHTML=`<tr><td colspan="22" class="empty">No se pudo leer la fuente de datos configurada</td></tr>`;
     $("resultText").textContent="CSV no disponible";
   }
 }
