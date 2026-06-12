@@ -6,11 +6,11 @@
 <title>CHEMES - Canales Digitales</title>
 <style>
 :root{
-  --bg:#f6f9fc;--surface:#fff;--soft:#f8fbfd;--line:#dce7f1;--line2:#edf3f8;
-  --text:#152337;--muted:#64748b;--muted2:#91a0b3;--red:#d33a2c;--red-bg:#fff2f0;
-  --amber:#b77905;--amber-bg:#fff8e8;--blue:#0d8fd1;--blue-bg:#eaf7ff;
-  --navy:#182733;--green:#14795d;--green-bg:#edf8f3;--violet:#6353ad;--violet-bg:#f4f2fb;
-  --shadow:0 16px 38px rgba(21,35,55,.08);--shadow2:0 10px 24px rgba(21,35,55,.06);
+  --bg:#f6f8fb;--surface:#fff;--soft:#f8fafc;--line:#e2e8f0;--line2:#edf2f7;
+  --text:#0f172a;--muted:#64748b;--muted2:#94a3b8;--red:#dc2626;--red-bg:#fee2e2;
+  --amber:#b45309;--amber-bg:#fef3c7;--blue:#0ea5e9;--blue-bg:#e0f2fe;
+  --navy:#0f172a;--green:#15803d;--green-bg:#dcfce7;--violet:#7c3aed;--violet-bg:#ede9fe;
+  --shadow:0 10px 28px rgba(15,23,42,.06);--shadow2:0 8px 24px rgba(15,23,42,.045);
 }
 *{box-sizing:border-box}
 body{margin:0;background:linear-gradient(180deg,#fbfdff 0,#f4f9fd 210px,#f6f9fc 100%);color:var(--text);font-family:"Inter","Segoe UI",Arial,sans-serif;font-size:14px;font-weight:400}
@@ -19,27 +19,27 @@ button,input,select{font:inherit}
 .topbar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);border-bottom:1px solid var(--line);box-shadow:0 1px 0 rgba(13,143,209,.08);backdrop-filter:blur(10px)}
 .top-inner{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:18px 20px}
 .brand{display:flex;align-items:center;gap:12px;min-width:320px}
-.brand-logo{width:58px;height:58px;border-radius:12px;object-fit:contain;background:#5cc5e6;padding:6px;box-shadow:0 10px 22px rgba(13,143,209,.18)}
+.brand-logo{width:58px;height:58px;border-radius:14px;object-fit:contain;background:#5cc5e6;padding:6px;box-shadow:0 10px 22px rgba(13,143,209,.18)}
 .brand-copy{display:flex;flex-direction:column;gap:3px}
 .brand-kicker{color:#006ee6;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
 .brand h1{margin:0;font-size:25px;font-weight:560;letter-spacing:0;color:#111827}.brand small{display:block;color:var(--muted);font-size:13px}
 .filters{display:grid;grid-template-columns:minmax(240px,360px) 190px 170px;gap:10px;align-items:center}
-.search,.select{height:48px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text);padding:0 14px;outline:none;box-shadow:0 6px 16px rgba(21,35,55,.03)}
+.search,.select{height:46px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--text);padding:0 14px;outline:none;box-shadow:0 6px 16px rgba(21,35,55,.03)}
 .search:focus,.select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(13,143,209,.13)}
 .wrap{padding:16px 20px 22px}
 .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-bottom:14px}
-.status-panel,.action-panel,.data-panel{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
+.status-panel,.action-panel,.data-panel{background:rgba(255,255,255,.98);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
 .status-panel{padding:16px}.status-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
 .status-title{font-weight:560;font-size:16px;color:var(--navy)}.status-title span{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:4px}
 .refresh{color:var(--muted);font-size:12px;text-align:right}
 .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
-.kpi{display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:center;border:1px solid var(--line2);border-radius:10px;padding:13px;background:#fff;min-height:88px;box-shadow:var(--shadow2)}
-.kpi::before{content:attr(data-icon);display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:11px;background:var(--blue-bg);color:#087dc0;font-size:19px;font-weight:560}
+.kpi{display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:center;border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff;min-height:96px;box-shadow:var(--shadow2)}
+.kpi::before{content:attr(data-icon);display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:14px;background:var(--blue-bg);color:#087dc0;font-size:18px;font-weight:560}
 .kpi strong{display:block;font-size:26px;line-height:1;margin-bottom:7px;font-weight:560;color:#111827}.kpi span{display:block;color:#24364e;font-size:13px}
 .kpi.danger::before{background:var(--red-bg);color:var(--red)}.kpi.warning::before{background:var(--amber-bg);color:#d58a00}.kpi.violet::before{background:var(--violet-bg);color:var(--violet)}.kpi.bna::before{background:#e4fbfb;color:#008c91}
 .action-panel{padding:14px}.action-title{font-weight:560;margin-bottom:10px;color:var(--navy)}
 .quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.quick{height:56px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text);cursor:pointer;text-align:left;padding:0 12px;font-weight:560;box-shadow:0 6px 16px rgba(21,35,55,.03)}
+.quick{height:58px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--text);cursor:pointer;text-align:left;padding:0 14px;font-weight:560;box-shadow:0 6px 16px rgba(21,35,55,.03)}
 .quick:hover{border-color:#91d1e6;background:#fbfdff}.quick.active{border-color:#0078ff;box-shadow:inset 4px 0 0 #0078ff;background:#f6fbff}
 .quick small{display:block;color:var(--muted);font-weight:400;margin-top:2px}
 .content{display:grid;grid-template-columns:260px minmax(0,1fr);gap:14px}
@@ -48,7 +48,7 @@ button,input,select{font:inherit}
 .panel-body{padding:12px 14px}
 .metric-row{display:flex;justify-content:space-between;gap:10px;padding:11px 2px;border-bottom:1px solid var(--line2)}.metric-row:last-child{border-bottom:0}
 .metric-row b{font-size:15px;font-weight:560}.metric-row span{color:var(--muted)}
-.channel-card{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:10px;padding:11px;border:1px solid var(--line2);border-radius:10px;background:#fff;margin-bottom:8px}
+.channel-card{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:10px;padding:11px;border:1px solid var(--line2);border-radius:14px;background:#fff;margin-bottom:8px}
 .channel-card b{font-size:15px;font-weight:560}.channel-card span{color:var(--muted);font-size:12px}.channel-card .value{font-size:20px;font-weight:560;color:var(--blue)}
 .channel-logo{width:30px;height:30px;border-radius:8px;border:1px solid var(--line2);background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 30px}
 .channel-logo img{width:100%;height:100%;object-fit:contain;padding:3px;display:block}
@@ -58,12 +58,22 @@ button,input,select{font:inherit}
 .view-options{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px}.toggle{display:flex;align-items:center;gap:7px}
 .export-btn{height:42px;border:1px solid #0078ff;border-radius:8px;background:#0078ff;color:#fff;padding:0 16px;cursor:pointer;font-weight:560;box-shadow:0 8px 18px rgba(0,120,255,.22)}
 .export-btn:hover{filter:brightness(.96)}
-.priority-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;padding:13px 18px;border:1px solid #ffd9d4;border-radius:10px;background:linear-gradient(90deg,#fff2f0,#fffafa);box-shadow:var(--shadow2);color:#1f2937}
+.priority-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;padding:15px 20px;border:1px solid #fecdd3;border-radius:14px;background:#fff1f2;box-shadow:var(--shadow2);color:#1f2937}
 .priority-strip b{color:var(--red)}
+.health-strip{display:grid;grid-template-columns:86px minmax(0,1fr);gap:18px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff 0,#fbfdff 100%)}
+.donut{width:76px;height:76px;border-radius:50%;background:conic-gradient(var(--red) 0deg,var(--red) var(--q),#f59e0b var(--q),#f59e0b var(--c),var(--violet) var(--c),var(--violet) var(--d),var(--blue) var(--d),var(--blue) var(--s),#22c55e var(--s),#22c55e 360deg);display:flex;align-items:center;justify-content:center;position:relative}
+.donut::after{content:"";position:absolute;width:50px;height:50px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--line2)}
+.donut-center{position:relative;z-index:1;text-align:center;line-height:1.05}.donut-center b{display:block;font-size:13px;font-weight:560;color:var(--text)}.donut-center span{font-size:10px;color:var(--muted)}
+.health-legend{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px}.legend-dot{width:9px;height:9px;border-radius:50%;background:var(--dot)}.legend-item b{font-size:13px;font-weight:560;color:var(--text);margin-right:2px}
 .table-wrap{overflow:auto;max-height:calc(100vh - 310px)}
 table{border-collapse:separate;border-spacing:0;width:100%;min-width:1580px}
 th,td{padding:10px 11px;border-bottom:1px solid var(--line2);text-align:right;white-space:nowrap;vertical-align:middle}
-th{position:sticky;top:0;z-index:2;background:#f7fbfd;color:#556371;font-size:12px;font-weight:560;text-transform:uppercase;letter-spacing:0}
+th{position:sticky;top:0;z-index:2;background:#f8fafc;color:#334155;font-size:12px;font-weight:560;text-transform:uppercase;letter-spacing:0}
+th[data-sort]{cursor:pointer;user-select:none}
+th[data-sort]::after{content:"";display:inline-block;margin-left:6px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid #b6c2d1;vertical-align:middle;opacity:.72}
+th.sorted-asc::after{border-top:0;border-bottom:5px solid var(--blue)}
+th.sorted-desc::after{border-top:5px solid var(--blue)}
 th:first-child,td:first-child{position:sticky;left:0;z-index:3;text-align:left;background:#fff;box-shadow:10px 0 18px rgba(30,45,70,.06)}
 th:first-child{background:#f7fbfd;z-index:4}
 tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#fbfdff}
@@ -169,31 +179,37 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
             <label class="toggle"><input type="checkbox" id="compact" checked> Vista compacta</label>
           </div>
         </div>
+        <div class="health-strip">
+          <div class="donut" id="healthDonut" style="--q:0deg;--c:0deg;--d:0deg;--s:0deg">
+            <div class="donut-center"><b id="donutTotal">-</b><span>totales</span></div>
+          </div>
+          <div class="health-legend" id="healthLegend"></div>
+        </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Articulo</th>
-                <th>Estado</th>
+                <th data-sort="COD_ARTICU">Articulo</th>
+                <th data-sort="Estado_Monitoreo">Estado</th>
                 <th>Canales</th>
-                <th>Disp. CD</th>
-                <th>Comp. CD</th>
-                <th>Disp. CA</th>
-                <th>Comp. CA</th>
-                <th>Total disp.</th>
-                <th>Comp. total</th>
-                <th>Ventas 30d</th>
-                <th>Rot/dia</th>
-                <th>Cobertura</th>
-                <th>Saldo Presta</th>
-                <th>Saldo Producteca</th>
-                <th>Dif Presta</th>
-                <th>Dif BNA</th>
+                <th data-sort="Stock_Disponible_CD">Disp. CD</th>
+                <th data-sort="Stock_Comprometido_CD">Comp. CD</th>
+                <th data-sort="Stock_Disponible_CA">Disp. CA</th>
+                <th data-sort="Stock_Comprometido_CA">Comp. CA</th>
+                <th data-sort="Saldo_Real">Total disp.</th>
+                <th data-sort="Stock_Comprometido_Total">Comp. total</th>
+                <th data-sort="Ventas_Ultimos_30_Dias">Ventas 30d</th>
+                <th data-sort="Rotacion_Diaria">Rot/dia</th>
+                <th data-sort="Dias_Cobertura">Cobertura</th>
+                <th data-sort="Saldo_Prestashop">Saldo Presta</th>
+                <th data-sort="Saldo_BNA">Saldo Producteca</th>
+                <th data-sort="Dif_Prestashop_vs_Real">Dif Presta</th>
+                <th data-sort="Dif_BNA_vs_Producteca">Dif BNA</th>
                 <th>Act. Presta</th>
-                <th>L20 Web</th>
-                <th>L500 BNA</th>
-                <th class="optional">L501 BNA</th>
-                <th class="optional">L1 Contado</th>
+                <th data-sort="Precio_Lista_20_Web">L20 Web</th>
+                <th data-sort="Precio_Lista_500_BNA_18CSI">L500 BNA</th>
+                <th class="optional" data-sort="Precio_Lista_501_BNA_EFICI">L501 BNA</th>
+                <th class="optional" data-sort="Precio_Lista_1_Contado">L1 Contado</th>
                 <th class="optional">Fecha stock</th>
               </tr>
             </thead>
@@ -208,7 +224,7 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
 <script>
 const APP_SCRIPT_DATA_URL="";
 const PRODUCT_IMAGE_BASE="assets/productos";
-const state={rows:[],filtered:[]};
+const state={rows:[],filtered:[],sort:{key:"",dir:1}};
 const $=id=>document.getElementById(id);
 const num=v=>Number(String(v??"").replace(",",".")||0);
 const int=v=>num(v).toLocaleString("es-AR",{maximumFractionDigits:0});
@@ -279,6 +295,22 @@ function apply(){
   render();
 }
 function countWhere(fn){return state.rows.filter(fn).length}
+function visibleCountWhere(rows,fn){return rows.filter(fn).length}
+function sortRows(rows){
+  if(!state.sort.key)return rows;
+  const key=state.sort.key, dir=state.sort.dir;
+  const numericKeys=new Set(["Stock_Disponible_CD","Stock_Comprometido_CD","Stock_Disponible_CA","Stock_Comprometido_CA","Saldo_Real","Stock_Comprometido_Total","Ventas_Ultimos_30_Dias","Rotacion_Diaria","Dias_Cobertura","Saldo_Prestashop","Saldo_BNA","Dif_Prestashop_vs_Real","Dif_BNA_vs_Producteca","Precio_Lista_20_Web","Precio_Lista_500_BNA_18CSI","Precio_Lista_501_BNA_EFICI","Precio_Lista_1_Contado"]);
+  return [...rows].sort((a,b)=>{
+    if(numericKeys.has(key))return (num(a[key])-num(b[key]))*dir;
+    return String(a[key]??"").localeCompare(String(b[key]??""),"es",{numeric:true,sensitivity:"base"})*dir;
+  });
+}
+function renderSortIndicators(){
+  document.querySelectorAll("th[data-sort]").forEach(th=>{
+    th.classList.toggle("sorted-asc",state.sort.key===th.dataset.sort&&state.sort.dir===1);
+    th.classList.toggle("sorted-desc",state.sort.key===th.dataset.sort&&state.sort.dir===-1);
+  });
+}
 function excelCell(v){return esc(v??"")}
 function exportExcel(){
   const cols=[
@@ -313,7 +345,7 @@ function exportExcel(){
   URL.revokeObjectURL(url);
 }
 function render(){
-  const rows=state.filtered;
+  const rows=sortRows(state.filtered);
   const total=state.rows.length;
   $("kTotal").textContent=int(total);
   $("kPresta").textContent=int(countWhere(r=>num(r.Publicado_Prestashop)===1));
@@ -328,6 +360,20 @@ function render(){
   const groups=["QUIEBRE","COBERTURA_BAJA","CANAL_MAYOR_A_TANGO","CANAL_SIN_STOCK","SIN_CANAL_DIGITAL","OK"];
   $("summary").innerHTML=groups.map(g=>`<div class="metric-row"><span>${badgeEstado(g)}</span><b>${int(countWhere(r=>r.Estado_Monitoreo===g))}</b></div>`).join("");
   $("resultText").textContent=`${int(rows.length)} de ${int(total)} articulos visibles`;
+  renderSortIndicators();
+
+  const visibleTotal=Math.max(rows.length,1);
+  const q=visibleCountWhere(rows,r=>r.Estado_Monitoreo==="QUIEBRE");
+  const cb=visibleCountWhere(rows,r=>r.Estado_Monitoreo==="COBERTURA_BAJA");
+  const dm=visibleCountWhere(rows,r=>r.Estado_Monitoreo==="CANAL_MAYOR_A_TANGO");
+  const ss=visibleCountWhere(rows,r=>r.Estado_Monitoreo==="CANAL_SIN_STOCK");
+  const ok=visibleCountWhere(rows,r=>r.Estado_Monitoreo==="OK");
+  const a1=q/visibleTotal*360, a2=(q+cb)/visibleTotal*360, a3=(q+cb+dm)/visibleTotal*360, a4=(q+cb+dm+ss)/visibleTotal*360;
+  $("healthDonut").style.cssText=`--q:${a1}deg;--c:${a2}deg;--d:${a3}deg;--s:${a4}deg`;
+  $("donutTotal").textContent=int(q+cb+dm+ss+ok);
+  $("healthLegend").innerHTML=[
+    ["#dc2626",q,"Quiebre"],["#f59e0b",cb,"Cobertura baja"],["#7c3aed",dm,"Canal > TANGO"],["#0ea5e9",ss,"Sin stock"],["#22c55e",ok,"OK"]
+  ].map(x=>`<span class="legend-item"><i class="legend-dot" style="--dot:${x[0]}"></i><b>${int(x[1])}</b>${x[2]}</span>`).join("");
 
   const first=state.rows[0];
   if(first?.Fecha_Exportacion){
@@ -406,6 +452,12 @@ async function boot(){
 }
 ["q","estado","canal"].forEach(id=>$(id).addEventListener("input",apply));
 document.querySelectorAll(".quick").forEach(btn=>btn.addEventListener("click",()=>setQuick(btn.dataset.quick)));
+document.querySelectorAll("th[data-sort]").forEach(th=>th.addEventListener("click",()=>{
+  const key=th.dataset.sort;
+  state.sort.dir=state.sort.key===key ? state.sort.dir*-1 : 1;
+  state.sort.key=key;
+  render();
+}));
 $("compact").addEventListener("change",e=>$("tablePanel").classList.toggle("compact",e.target.checked));
 $("exportExcel").addEventListener("click",exportExcel);
 $("tablePanel").classList.add("compact");
