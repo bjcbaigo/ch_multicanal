@@ -27,9 +27,30 @@ Nota: Producteca/BNA se calcula con la misma regla usada por el integrador: depo
 - presencia en Prestashop y BNA
 - saldo informado por cada canal
 - precios TANGO principales: contado, web, MercadoLibre y BNA
-- saldo real disponible consolidado
+- stock disponible y comprometido por depositos operativos visibles: `CD`, `CA` y `50` mostrado como `COLCH.`
+- saldo real disponible consolidado para la regla vigente del panel
 - diferencias de stock entre canal y TANGO
 - estado operativo: `OK`, `QUIEBRE`, `CANAL_SIN_STOCK`, `CANAL_MAYOR_A_TANGO`, `SIN_CANAL_DIGITAL`
+
+## Lectura de columnas visibles
+
+La tabla usa encabezados abreviados para reducir scroll horizontal:
+
+- `CD`: disponible Centro de Distribucion.
+- `C.CD`: comprometido Centro de Distribucion.
+- `CA`: disponible Deposito Candioti.
+- `C.CA`: comprometido Deposito Candioti.
+- `COLCH.`: disponible deposito `50`, Santa Fe Colchoneria.
+- `C. COLCH`: comprometido deposito `50`, Santa Fe Colchoneria.
+- `T. DISPO.`: total disponible usado como referencia operativa.
+- `C.TOTAL`: comprometido total.
+- `VENTAS 30D`: unidades vendidas en los ultimos 30 dias.
+- `ROT/DIA`: promedio diario de venta segun ultimos 30 dias.
+- `COBERTURA`: dias estimados de stock.
+- `PRESTA`: saldo Prestashop.
+- `PRODUC`: saldo Producteca/BNA calculado bajo regla del integrador.
+
+El deposito `50` se muestra para visibilidad, pero la regla vigente de `T. DISPO.` y cobertura continua basada en `CD + CA` salvo cambio funcional posterior.
 
 ## Uso
 
@@ -101,3 +122,5 @@ La consulta deja columnas fijas para listas comerciales relevantes hoy:
 - `Precio_Lista_501_BNA_EFICI`
 
 Si luego suman otro canal, conviene agregar sus listas a la CTE `Precios` y una seccion de agregacion en `Canales`.
+
+La guia funcional para usuarios esta en `../../docs/guia_usuarios_panel_canales.md` y el registro tecnico ampliado esta en `../../docs/registro_tecnico_canales_digitales.md`.
