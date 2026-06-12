@@ -72,14 +72,13 @@ button,input,select{font:inherit}
 .health-legend{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px}.legend-dot{width:9px;height:9px;border-radius:50%;background:var(--dot)}.legend-item b{font-size:13px;font-weight:560;color:var(--text);margin-right:2px}
 .table-wrap{overflow:auto;max-height:calc(100vh - 390px)}
-table{border-collapse:separate;border-spacing:0;width:100%;min-width:1760px}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:1640px}
 th,td{padding:10px 11px;border-bottom:1px solid var(--line2);text-align:right;white-space:nowrap;vertical-align:middle}
 th{position:sticky;top:0;z-index:2;background:#f8fafc;color:#334155;font-size:12px;font-weight:560;text-transform:uppercase;letter-spacing:0}
 th[data-sort]{cursor:pointer;user-select:none}
 th[data-sort]::after{content:"";display:inline-block;margin-left:6px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid #b6c2d1;vertical-align:middle;opacity:.72}
 th.sorted-asc::after{border-top:0;border-bottom:5px solid var(--blue)}
 th.sorted-desc::after{border-top:5px solid var(--blue)}
-.depot-head{display:flex;flex-direction:column;gap:2px;line-height:1.1}.depot-head small{font-size:10px;color:var(--muted2);font-weight:400;text-transform:none}
 th:first-child,td:first-child{position:sticky;left:0;z-index:3;text-align:left;background:#fff;box-shadow:10px 0 18px rgba(30,45,70,.06)}
 th:first-child{background:#f7fbfd;z-index:4}
 tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#fbfdff}
@@ -93,7 +92,7 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
 .stock{font-weight:560}.stock.zero{color:var(--red)}.diff.badtext{color:var(--red);font-weight:560}.diff.warntext{color:var(--amber);font-weight:560}
 .money{color:#24364e}.prices-muted{color:var(--muted2);font-size:12px}.empty{padding:36px;text-align:center;color:var(--muted)}
 .drawer{display:none;padding:10px 14px;background:#fbfcfe;border-bottom:1px solid var(--line2);color:var(--muted);font-size:12px}.drawer b{color:var(--text)}
-.compact .optional{display:none}.compact table{min-width:1500px}
+.compact .optional{display:none}.compact table{min-width:1400px}
 @media(max-width:1300px){.quick-actions{grid-template-columns:repeat(3,minmax(160px,1fr))}.status-head{grid-template-columns:1fr auto}.refresh{grid-column:1/-1;text-align:left}.health-strip{grid-template-columns:86px 1fr}.channel-summary{grid-column:1/-1;margin-left:0}}
 @media(max-width:1100px){.top-inner{align-items:stretch;flex-direction:column}.filters{grid-template-columns:1fr 1fr}.search{grid-column:1/-1}.kpis{grid-template-columns:repeat(2,1fr)}.quick-actions{grid-template-columns:1fr}.table-wrap{max-height:none}.priority-strip{max-width:none}}
 @media(max-width:640px){.wrap{padding:12px}.top-inner{padding:12px}.brand{min-width:0}.brand-logo{width:42px;height:42px}.filters{grid-template-columns:1fr}.kpis{grid-template-columns:1fr}.status-head{grid-template-columns:1fr}table{min-width:900px}.article{min-width:280px}}
@@ -189,19 +188,19 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
                 <th data-sort="COD_ARTICU">Articulo</th>
                 <th data-sort="Estado_Monitoreo">Estado</th>
                 <th>Canales</th>
-                <th data-sort="Stock_Disponible_CD"><span class="depot-head">Disp. CD<small>Centro distribucion</small></span></th>
-                <th data-sort="Stock_Comprometido_CD"><span class="depot-head">Comp. CD<small>Centro distribucion</small></span></th>
-                <th data-sort="Stock_Disponible_CA"><span class="depot-head">Disp. CA<small>Deposito Candioti</small></span></th>
-                <th data-sort="Stock_Comprometido_CA"><span class="depot-head">Comp. CA<small>Deposito Candioti</small></span></th>
-                <th data-sort="Stock_Disponible_SV"><span class="depot-head">Disp. SV<small>Saldos venta verde</small></span></th>
-                <th data-sort="Stock_Comprometido_SV"><span class="depot-head">Comp. SV<small>Saldos venta verde</small></span></th>
-                <th data-sort="Saldo_Real">Total disp.</th>
-                <th data-sort="Stock_Comprometido_Total">Comp. total</th>
-                <th data-sort="Ventas_Ultimos_30_Dias">Ventas 30d</th>
-                <th data-sort="Rotacion_Diaria">Rot/dia</th>
-                <th data-sort="Dias_Cobertura">Cobertura</th>
-                <th data-sort="Saldo_Prestashop">Saldo Presta</th>
-                <th data-sort="Saldo_BNA">Saldo Producteca</th>
+                <th data-sort="Stock_Disponible_CD">CD</th>
+                <th data-sort="Stock_Comprometido_CD">C.CD</th>
+                <th data-sort="Stock_Disponible_CA">CA</th>
+                <th data-sort="Stock_Comprometido_CA">C.CA</th>
+                <th data-sort="Stock_Disponible_50">COLCH.</th>
+                <th data-sort="Stock_Comprometido_50">C. COLCH</th>
+                <th data-sort="Saldo_Real">T. DISPO.</th>
+                <th data-sort="Stock_Comprometido_Total">C.TOTAL</th>
+                <th data-sort="Ventas_Ultimos_30_Dias">VENTAS 30D</th>
+                <th data-sort="Rotacion_Diaria">ROT/DIA</th>
+                <th data-sort="Dias_Cobertura">COBERTURA</th>
+                <th data-sort="Saldo_Prestashop">PRESTA</th>
+                <th data-sort="Saldo_BNA">PRODUC</th>
                 <th data-sort="Dif_Prestashop_vs_Real">Dif Presta</th>
                 <th data-sort="Dif_BNA_vs_Producteca">Dif BNA</th>
                 <th>Act. Presta</th>
@@ -300,7 +299,7 @@ function visibleCountWhere(rows,fn){return rows.filter(fn).length}
 function sortRows(rows){
   if(!state.sort.key)return rows;
   const key=state.sort.key, dir=state.sort.dir;
-  const numericKeys=new Set(["Stock_Disponible_CD","Stock_Comprometido_CD","Stock_Disponible_CA","Stock_Comprometido_CA","Stock_Disponible_SV","Stock_Comprometido_SV","Saldo_Real","Stock_Comprometido_Total","Ventas_Ultimos_30_Dias","Rotacion_Diaria","Dias_Cobertura","Saldo_Prestashop","Saldo_BNA","Dif_Prestashop_vs_Real","Dif_BNA_vs_Producteca","Precio_Lista_20_Web","Precio_Lista_500_BNA_18CSI","Precio_Lista_501_BNA_EFICI","Precio_Lista_1_Contado"]);
+  const numericKeys=new Set(["Stock_Disponible_CD","Stock_Comprometido_CD","Stock_Disponible_CA","Stock_Comprometido_CA","Stock_Disponible_50","Stock_Comprometido_50","Saldo_Real","Stock_Comprometido_Total","Ventas_Ultimos_30_Dias","Rotacion_Diaria","Dias_Cobertura","Saldo_Prestashop","Saldo_BNA","Dif_Prestashop_vs_Real","Dif_BNA_vs_Producteca","Precio_Lista_20_Web","Precio_Lista_500_BNA_18CSI","Precio_Lista_501_BNA_EFICI","Precio_Lista_1_Contado"]);
   return [...rows].sort((a,b)=>{
     if(numericKeys.has(key))return (num(a[key])-num(b[key]))*dir;
     return String(a[key]??"").localeCompare(String(b[key]??""),"es",{numeric:true,sensitivity:"base"})*dir;
@@ -325,7 +324,7 @@ function exportExcel(){
     ["Stock_Comprometido_Producteca","Comprometido BNA"],
     ["Stock_Disponible_CD","Disponible CD - Centro distribucion"],["Stock_Comprometido_CD","Comprometido CD - Centro distribucion"],
     ["Stock_Disponible_CA","Disponible CA - Deposito Candioti"],["Stock_Comprometido_CA","Comprometido CA - Deposito Candioti"],
-    ["Stock_Disponible_SV","Disponible SV - Saldos venta verde"],["Stock_Comprometido_SV","Comprometido SV - Saldos venta verde"],
+    ["Stock_Disponible_50","Disponible 50 - Santa Fe Colchoneria"],["Stock_Comprometido_50","Comprometido 50 - Santa Fe Colchoneria"],
     ["Saldo_Real","Total disponible"],["Stock_Comprometido_Total","Comprometido total"],
     ["Ventas_Ultimos_30_Dias","Ventas 30 dias"],["Rotacion_Diaria","Rotacion diaria"],["Dias_Cobertura","Dias cobertura"],
     ["Dif_Prestashop_vs_Real","Dif Presta"],["Dif_BNA_vs_Producteca","Dif BNA Producteca"],["Dif_BNA_Nexo_vs_Producteca","Dif BNA NEXO ref."],
@@ -389,7 +388,7 @@ function render(){
   if(!rows.length){$("rows").innerHTML=`<tr><td colspan="24" class="empty">Sin datos para el filtro actual</td></tr>`;return}
   $("rows").innerHTML=rows.slice(0,1000).map(r=>{
     const dp=num(r.Dif_Prestashop_vs_Real), db=num(r.Dif_BNA_vs_Producteca), real=num(r.Saldo_Real), saldoBna=num(r.Saldo_BNA);
-    const cd=num(r.Stock_Disponible_CD), ca=num(r.Stock_Disponible_CA), sv=num(r.Stock_Disponible_SV), compCd=num(r.Stock_Comprometido_CD), compCa=num(r.Stock_Comprometido_CA), compSv=num(r.Stock_Comprometido_SV), compTotal=num(r.Stock_Comprometido_Total), ventas30=num(r.Ventas_Ultimos_30_Dias), rot=num(r.Rotacion_Diaria), cobertura=num(r.Dias_Cobertura);
+    const cd=num(r.Stock_Disponible_CD), ca=num(r.Stock_Disponible_CA), colch=num(r.Stock_Disponible_50), compCd=num(r.Stock_Comprometido_CD), compCa=num(r.Stock_Comprometido_CA), compColch=num(r.Stock_Comprometido_50), compTotal=num(r.Stock_Comprometido_Total), ventas30=num(r.Ventas_Ultimos_30_Dias), rot=num(r.Rotacion_Diaria), cobertura=num(r.Dias_Cobertura);
     const psOld=num(r.Prestashop_Desactualizado)===1, psDias=num(r.Dias_Sin_Actualizar_Prestashop), psApi=r.Fuente_Saldo_Prestashop==="PRESTASHOP_API";
     const channels=`<div class="chan">
       <span class="channel-pill chemes ${num(r.Publicado_Prestashop)?"on":""}" title="Prestashop / Chemes Web"><img src="assets/canales/chemes-web.png" alt="Prestashop"></span>
@@ -414,8 +413,8 @@ function render(){
       <td>${int(compCd)}</td>
       <td class="stock ${ca<=0?"zero":""}">${int(ca)}</td>
       <td>${int(compCa)}</td>
-      <td class="stock ${sv<=0?"zero":""}">${int(sv)}</td>
-      <td>${int(compSv)}</td>
+      <td class="stock ${colch<=0?"zero":""}">${int(colch)}</td>
+      <td>${int(compColch)}</td>
       <td class="stock ${real<=0?"zero":""}">${int(real)}</td>
       <td>${int(compTotal)}</td>
       <td>${int(ventas30)}</td>
