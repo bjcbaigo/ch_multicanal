@@ -17,7 +17,11 @@ a{color:#1496c8;font-weight:600}
   <p><a id="panelLink" href="outputs/panel_canales_digitales/index.html">Abrir panel</a></p>
 </main>
 <script>
-const target="outputs/panel_canales_digitales/index.html"+location.search+location.hash;
+const defaultDataUrl="https://script.google.com/macros/s/AKfycbyUj4NnKxWeuYLkM1z-1Ix5EH0NTrl1OV3mtOO8DHV6v9VOFLxhm5tzzJbT5aNazY5T/exec";
+const params=new URLSearchParams(location.search);
+if(!params.has("dataUrl")) params.set("dataUrl",defaultDataUrl);
+const query=params.toString();
+const target="outputs/panel_canales_digitales/index.html"+(query?`?${query}`:"")+location.hash;
 document.getElementById("panelLink").href=target;
 location.replace(target);
 </script>
