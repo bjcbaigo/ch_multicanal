@@ -1,0 +1,2 @@
+Archivo;Panel;Server;Database;ConsultaSql;RefreshMinutes;Descripcion
+canales_articulos_publicados.csv;canales_digitales;10.10.10.109;SUC_CHEMESWEB;sql/canales_articulos_publicados.sql;30;Articulos TANGO publicados en Prestashop BNA Producteca y canales digitales

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CHEMES - Paneles Web</title>
+<style>
+:root{
+  --bg:#eef6fb;--surface:#fff;--soft:#f7fbfe;--line:#d7e4ee;--text:#172033;
+  --muted:#637487;--muted2:#8b9aaa;--brand:#55bbe4;--brand-dark:#17415b;
+  --brand-soft:#e8f7fd;--blue:#1476a8;--blue-bg:#eaf7fc;
+  --green:#17805a;--green-bg:#e8f6ef;--amber:#b76300;--amber-bg:#fff6e6;
+  --red:#d93025;--red-bg:#fff0ee;--shadow:0 18px 42px rgba(23,65,91,.10);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;color:var(--text);font-family:"Segoe UI",Roboto,Arial,sans-serif;font-weight:400;
+  background:
+    linear-gradient(180deg,rgba(85,187,228,.22),rgba(238,246,251,0) 360px),
+    var(--bg);
+}
+.shell{min-height:100vh;display:flex;flex-direction:column}
+.top{background:rgba(255,255,255,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+.top-inner{max-width:1180px;margin:0 auto;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:13px}
+.logo-mark{width:54px;height:54px;border-radius:12px;display:grid;place-items:center;background:#5fc1e7;box-shadow:0 10px 22px rgba(20,118,168,.20)}
+.logo-mark img{width:46px;height:46px;object-fit:contain}
+.brand h1{margin:0;font-size:24px;letter-spacing:0;font-weight:620;color:var(--brand-dark)}
+.brand p{margin:5px 0 0;color:var(--muted);font-size:13px}
+.status{display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 11px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12px;color:var(--muted);box-shadow:0 6px 14px rgba(23,65,91,.06)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted2)}
+.dot.ok{background:var(--green)}.dot.warn{background:var(--amber)}.dot.bad{background:var(--red)}
+.wrap{max-width:1180px;width:100%;margin:0 auto;padding:22px}
+.hero{display:grid;grid-template-columns:1.08fr .92fr;gap:16px;margin-bottom:16px}
+.panel{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.summary{padding:22px;position:relative;overflow:hidden}
+.summary:after{content:"";position:absolute;right:-60px;top:-70px;width:210px;height:210px;border-radius:50%;background:rgba(85,187,228,.16)}
+.summary h2{font-size:20px;margin:0 0 8px;color:var(--brand-dark);position:relative;font-weight:610}
+.summary p{margin:0;color:var(--muted);line-height:1.45;position:relative}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px;position:relative}
+.metric{background:var(--soft);border:1px solid #e7f0f7;border-radius:10px;padding:13px}
+.metric b{display:block;font-size:25px;color:var(--brand-dark);font-weight:620}
+.metric span{display:block;margin-top:4px;color:var(--muted);font-size:12px}
+.quick{padding:17px}
+.quick h2{font-size:16px;margin:0 0 12px;color:var(--brand-dark);font-weight:610}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.quick a{display:flex;align-items:center;justify-content:center;height:44px;border-radius:9px;text-decoration:none;font-weight:600;border:1px solid var(--line);color:var(--brand-dark);background:#fff}
+.quick a.primary{background:var(--brand-dark);border-color:var(--brand-dark);color:#fff}
+.quick a:hover{transform:translateY(-1px);box-shadow:0 8px 16px rgba(23,65,91,.10)}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:8px 0 12px}
+.section-head h2{margin:0;font-size:17px;color:var(--brand-dark);font-weight:610}
+.section-head span{color:var(--muted);font-size:12px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{position:relative;display:flex;min-height:230px;flex-direction:column;justify-content:space-between;padding:17px;border-radius:12px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);text-decoration:none;color:var(--text);overflow:hidden}
+.card:before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--brand)}
+.card.entregas:before{background:var(--green)}
+.card.canales:before{background:var(--amber)}
+.card.auditoria:before{background:#7a58c1}
+.card:hover{transform:translateY(-2px);box-shadow:0 22px 44px rgba(23,65,91,.14)}
+.icon{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;background:var(--blue-bg);color:var(--blue);font-size:14px;font-weight:620}
+.entregas .icon{background:var(--green-bg);color:var(--green)}
+.canales .icon{background:var(--amber-bg);color:var(--amber)}
+.auditoria .icon{background:#f2eefb;color:#6d50bd}
+.card h3{margin:14px 0 7px;font-size:17px;color:var(--brand-dark);font-weight:610}
+.card p{margin:0;color:var(--muted);line-height:1.42;font-size:13px}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:18px;color:var(--muted2);font-size:12px}
+.go{font-size:18px;color:var(--blue)}
+.foot{color:var(--muted2);font-size:12px;margin-top:14px;text-align:right}
+@media(max-width:980px){
+  .top-inner,.hero{grid-template-columns:1fr;flex-direction:column;align-items:flex-start}
+  .cards{grid-template-columns:repeat(2,1fr)}.status{justify-content:flex-start}.metrics{grid-template-columns:1fr 1fr}
+}
+@media(max-width:620px){
+  .wrap,.top-inner{padding:16px}.cards,.quick-grid,.metrics{grid-template-columns:1fr}.card{min-height:190px}.brand h1{font-size:21px}.logo-mark{width:48px;height:48px}.logo-mark img{width:41px;height:41px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <div class="top-inner">
+      <div class="brand">
+        <div class="logo-mark"><img src="assets/IsolologoCH.png" alt="CHEMES"></div>
+        <div>
+          <h1>CHEMES - Paneles Web</h1>
+          <p>Acceso centralizado a operaciones web, pedidos, entregas y canales digitales.</p>
+        </div>
+      </div>
+      <div class="status">
+        <span class="chip"><i class="dot" id="healthDot"></i><span id="healthText">Verificando servicio</span></span>
+        <span class="chip" id="timeText">-</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="panel summary">
+        <h2>Centro operativo web</h2>
+        <p>Desde esta pantalla se accede a los paneles principales de la Ticketera y al nuevo control de publicaciones en canales digitales.</p>
+        <div class="metrics">
+          <div class="metric"><b id="mPedidos">-</b><span>pedidos en snapshot</span></div>
+          <div class="metric"><b id="mPendientes">-</b><span>pendientes de entrega</span></div>
+          <div class="metric"><b id="mConfirmadas">-</b><span>entregas confirmadas</span></div>
+        </div>
+      </div>
+      <div class="panel quick">
+        <h2>Accesos frecuentes</h2>
+        <div class="quick-grid">
+          <a class="primary" href="entregas.html">Abrir Entregas</a>
+          <a href="dashboard.html">Ver Pedidos</a>
+          <a href="canales-digitales.html">Canales Digitales</a>
+          <a href="auditoria.html">Auditoria</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <h2>Menu de opciones</h2>
+      <span>Servidor 10.10.10.109:8089</span>
+    </div>
+    <section class="cards">
+      <a class="card entregas" href="entregas.html">
+        <div>
+          <div class="icon">OK</div>
+          <h3>Entregas</h3>
+          <p>Gestion de pedidos listos para entrega, validacion operativa y confirmacion controlada.</p>
+        </div>
+        <div class="card-footer"><span>Operativo diario</span><span class="go">&gt;</span></div>
+      </a>
+      <a class="card" href="dashboard.html">
+        <div>
+          <div class="icon">PED</div>
+          <h3>Dashboard de pedidos</h3>
+          <p>Vista central de pedidos web, estados, importacion, remitos y seguimiento general.</p>
+        </div>
+        <div class="card-footer"><span>Panel principal</span><span class="go">&gt;</span></div>
+      </a>
+      <a class="card canales" href="canales-digitales.html">
+        <div>
+          <div class="icon">SKU</div>
+          <h3>Canales digitales</h3>
+          <p>Control de articulos publicados en Prestashop, BNA/Producteca y otros canales.</p>
+        </div>
+        <div class="card-footer"><span>Stock y precios</span><span class="go">&gt;</span></div>
+      </a>
+      <a class="card auditoria" href="auditoria.html">
+        <div>
+          <div class="icon">LOG</div>
+          <h3>Auditoria</h3>
+          <p>Revision de cambios, confirmaciones y trazabilidad de acciones realizadas.</p>
+        </div>
+        <div class="card-footer"><span>Control interno</span><span class="go">&gt;</span></div>
+      </a>
+    </section>
+    <div class="foot" id="generatedText"></div>
+  </main>
+</div>
+<script>
+const fmt=n=>Number(n||0).toLocaleString("es-AR");
+async function boot(){
+  document.getElementById("timeText").textContent=new Date().toLocaleString("es-AR");
+  try{
+    const res=await fetch("api/health",{cache:"no-store"});
+    if(!res.ok)throw new Error("HTTP "+res.status);
+    const h=await res.json();
+    document.getElementById("healthDot").className="dot ok";
+    document.getElementById("healthText").textContent=h.mode==="real"?"Servicio activo":"Servicio en simulacion";
+    document.getElementById("mPedidos").textContent=fmt(h.snapshot?.totalPedidos);
+    document.getElementById("mPendientes").textContent=fmt(h.snapshot?.pendientesEntregaFinal);
+    document.getElementById("mConfirmadas").textContent=fmt(h.snapshot?.entregasConfirmadas);
+    document.getElementById("generatedText").textContent=h.snapshot?.generatedAt ? "Datos de pedidos actualizados: "+h.snapshot.generatedAt : "";
+  }catch(e){
+    document.getElementById("healthDot").className="dot bad";
+    document.getElementById("healthText").textContent="No se pudo verificar";
+  }
+}
+boot();
+</script>
+</body>
+</html>

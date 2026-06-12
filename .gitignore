@@ -1,0 +1,16 @@
+work/
+outputs/frontend/out/
+outputs/panel_canales_digitales/out/
+outputs/panel_canales_digitales/logs/
+outputs/panel_canales_digitales/.config/
+*.log
+*.tmp
+*.bak
+*.xlsx
+*.xls
+*.csv
+!outputs/panel_canales_digitales/csv_exports_manifest.csv
+*.pdf
+*.zip
+*.7z
+*.rar

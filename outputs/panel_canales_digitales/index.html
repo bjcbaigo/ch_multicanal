@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CHEMES - Canales Digitales</title>
+<style>
+:root{
+  --bg:#f5f8fb;--surface:#fff;--soft:#f8fbfd;--line:#dfe7ee;--line2:#eef3f7;
+  --text:#1f2933;--muted:#687684;--muted2:#93a0aa;--red:#d33a2c;--red-bg:#fff3f1;
+  --amber:#ac6b10;--amber-bg:#fff8eb;--blue:#1496c8;--blue-bg:#eaf8fd;
+  --navy:#182733;--green:#14795d;--green-bg:#edf8f3;--violet:#6353ad;--violet-bg:#f4f2fb;
+  --shadow:0 16px 34px rgba(25,39,52,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#fafdff 0,#f4f8fb 180px,#f5f8fb 100%);color:var(--text);font-family:"Segoe UI",Arial,sans-serif;font-size:14px;font-weight:400}
+button,input,select{font:inherit}
+.app{min-height:100vh;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line);box-shadow:0 1px 0 rgba(20,150,200,.08);backdrop-filter:blur(8px)}
+.top-inner{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:14px 20px}
+.brand{display:flex;align-items:center;gap:12px;min-width:320px}
+.brand-logo{width:48px;height:48px;border-radius:10px;object-fit:contain;background:#5cc5e6;padding:5px;box-shadow:0 8px 18px rgba(20,150,200,.18)}
+.brand-copy{display:flex;flex-direction:column;gap:3px}
+.brand-kicker{color:var(--blue);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.brand h1{margin:0;font-size:19px;font-weight:620;letter-spacing:0;color:var(--navy)}.brand small{display:block;color:var(--muted);font-size:12px}
+.filters{display:grid;grid-template-columns:minmax(240px,360px) 190px 170px;gap:10px;align-items:center}
+.search,.select{height:40px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--text);padding:0 12px;outline:none;box-shadow:0 1px 2px rgba(25,39,52,.03)}
+.search:focus,.select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(20,150,200,.14)}
+.wrap{padding:16px 20px 22px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-bottom:14px}
+.status-panel,.action-panel,.data-panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}
+.status-panel{padding:16px;border-top:3px solid var(--blue)}.status-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
+.status-title{font-weight:620;font-size:16px;color:var(--navy)}.status-title span{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:4px}
+.refresh{color:var(--muted);font-size:12px;text-align:right}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.kpi{border:1px solid var(--line2);border-radius:8px;padding:12px;background:linear-gradient(180deg,#fff 0,var(--soft) 100%);min-height:88px}
+.kpi strong{display:block;font-size:25px;line-height:1;margin-bottom:8px;font-weight:620;color:var(--navy)}.kpi span{display:block;color:var(--muted);font-size:12px}
+.kpi.danger{background:var(--red-bg);border-color:#ffd7d2}.kpi.warning{background:var(--amber-bg);border-color:#ffe1ad}.kpi.ok{background:var(--green-bg);border-color:#bee8d2}
+.action-panel{padding:14px}.action-title{font-weight:620;margin-bottom:10px;color:var(--navy)}
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quick{height:44px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--text);cursor:pointer;text-align:left;padding:0 11px;font-weight:560}
+.quick:hover{border-color:#91d1e6;background:#fbfdff}.quick.active{border-color:var(--blue);box-shadow:inset 4px 0 0 var(--blue);background:var(--blue-bg)}
+.quick small{display:block;color:var(--muted);font-weight:400;margin-top:2px}
+.content{display:grid;grid-template-columns:260px minmax(0,1fr);gap:14px}
+.side{display:flex;flex-direction:column;gap:14px}
+.panel-title{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border-bottom:1px solid var(--line);font-weight:620;color:var(--navy)}
+.panel-body{padding:12px 14px}
+.metric-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2)}.metric-row:last-child{border-bottom:0}
+.metric-row b{font-size:15px;font-weight:620}.metric-row span{color:var(--muted)}
+.channel-card{display:grid;grid-template-columns:1fr auto;gap:5px;padding:10px;border:1px solid var(--line2);border-radius:8px;background:var(--soft);margin-bottom:8px}
+.channel-card b{font-size:15px;font-weight:620}.channel-card span{color:var(--muted);font-size:12px}.channel-card .value{font-size:20px;font-weight:620;color:var(--blue)}
+.table-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;border-bottom:1px solid var(--line)}
+.table-title{font-weight:620;color:var(--navy)}.table-title small{display:block;color:var(--muted);font-weight:400;margin-top:3px}
+.view-options{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px}.toggle{display:flex;align-items:center;gap:7px}
+.export-btn{height:34px;border:1px solid var(--blue);border-radius:8px;background:var(--blue);color:#fff;padding:0 12px;cursor:pointer;font-weight:560}
+.export-btn:hover{filter:brightness(.96)}
+.table-wrap{overflow:auto;max-height:calc(100vh - 278px)}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:1580px}
+th,td{padding:10px 11px;border-bottom:1px solid var(--line2);text-align:right;white-space:nowrap;vertical-align:middle}
+th{position:sticky;top:0;z-index:2;background:#f7fbfd;color:#556371;font-size:12px;font-weight:620;text-transform:uppercase;letter-spacing:0}
+th:first-child,td:first-child{position:sticky;left:0;z-index:3;text-align:left;background:#fff;box-shadow:8px 0 14px rgba(30,45,70,.05)}
+th:first-child{background:#f7fbfd;z-index:4}
+tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#fbfdff}
+.article{min-width:360px;max-width:420px}.code{font-weight:620;color:#0f1e35}.name{margin-top:4px;overflow:hidden;text-overflow:ellipsis;color:#26364d}.meta{margin-top:5px;color:var(--muted2);font-size:12px}
+.badge{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:4px 9px;font-size:11px;font-weight:620}
+.bad{background:var(--red-bg);color:var(--red)}.warn{background:var(--amber-bg);color:var(--amber)}.info{background:var(--blue-bg);color:var(--blue)}.neutral{background:var(--violet-bg);color:var(--violet)}.good{background:var(--green-bg);color:var(--green)}
+.chan{display:flex;gap:5px;justify-content:flex-end}.pill{border-radius:999px;padding:3px 8px;font-size:12px;font-weight:560;background:#eef2f7;color:#7a8697}.pill.on{background:var(--blue-bg);color:var(--blue)}
+.stock{font-weight:620}.stock.zero{color:var(--red)}.diff.badtext{color:var(--red);font-weight:620}.diff.warntext{color:var(--amber);font-weight:620}
+.money{color:#24364e}.prices-muted{color:var(--muted2);font-size:12px}.empty{padding:36px;text-align:center;color:var(--muted)}
+.drawer{display:none;padding:10px 14px;background:#fbfcfe;border-bottom:1px solid var(--line2);color:var(--muted);font-size:12px}.drawer b{color:var(--text)}
+.compact .optional{display:none}.compact table{min-width:1280px}
+@media(max-width:1100px){.top-inner,.hero,.content{grid-template-columns:1fr}.top-inner{align-items:stretch;flex-direction:column}.filters{grid-template-columns:1fr 1fr}.search{grid-column:1/-1}.kpis{grid-template-columns:repeat(2,1fr)}.quick-actions{grid-template-columns:1fr}.table-wrap{max-height:none}}
+@media(max-width:640px){.wrap{padding:12px}.top-inner{padding:12px}.brand{min-width:0}.brand-logo{width:42px;height:42px}.filters{grid-template-columns:1fr}.kpis{grid-template-columns:1fr}table{min-width:900px}.article{min-width:280px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="top-inner">
+      <div class="brand">
+        <img class="brand-logo" src="assets/IsolologoCH.png" alt="Chemes">
+        <div class="brand-copy">
+          <span class="brand-kicker">CHEMES</span>
+          <h1>Canales Digitales</h1>
+          <small id="stamp">Articulos publicados, precios TANGO y control de stock</small>
+        </div>
+      </div>
+      <div class="filters">
+        <input class="search" id="q" type="search" placeholder="Buscar codigo, descripcion o familia">
+        <select class="select" id="estado">
+          <option value="">Todos los estados</option>
+          <option>QUIEBRE</option>
+          <option>COBERTURA_BAJA</option>
+          <option>CANAL_MAYOR_A_TANGO</option>
+          <option>CANAL_SIN_STOCK</option>
+          <option>SIN_CANAL_DIGITAL</option>
+          <option>OK</option>
+        </select>
+        <select class="select" id="canal">
+          <option value="">Todos los canales</option>
+          <option value="prestashop">Prestashop</option>
+          <option value="bna">BNA Producteca</option>
+          <option value="ml">MercadoLibre</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="status-panel">
+        <div class="status-head">
+          <div class="status-title">Situacion actual<span id="focusText">Prioridad: revisar publicaciones con stock informado y saldo real cero.</span></div>
+          <div class="refresh" id="refreshText">Sin exportacion</div>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><strong id="kTotal">-</strong><span>monitoreados</span></div>
+          <div class="kpi danger"><strong id="kQuiebre">-</strong><span>quiebre critico</span></div>
+          <div class="kpi warning"><strong id="kCobertura">-</strong><span>cobertura baja</span></div>
+          <div class="kpi warning"><strong id="kDif">-</strong><span>canal mayor a TANGO</span></div>
+          <div class="kpi"><strong id="kPresta">-</strong><span>Prestashop</span></div>
+          <div class="kpi"><strong id="kBna">-</strong><span>BNA Producteca</span></div>
+        </div>
+      </div>
+      <div class="action-panel">
+        <div class="action-title">Vistas rapidas</div>
+        <div class="quick-actions">
+          <button class="quick active" data-quick="">Todo<small>vista completa</small></button>
+          <button class="quick" data-quick="QUIEBRE">Quiebres<small>stock en canal y TANGO cero</small></button>
+          <button class="quick" data-quick="COBERTURA_BAJA">Cobertura baja<small>menos de 7 dias de stock</small></button>
+          <button class="quick" data-quick="CANAL_MAYOR_A_TANGO">Diferencias<small>canal informa mas stock</small></button>
+          <button class="quick" data-quick="CANAL_SIN_STOCK">Canal sin stock<small>TANGO tiene saldo</small></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <aside class="side">
+        <section class="data-panel">
+          <div class="panel-title">Resumen</div>
+          <div class="panel-body" id="summary"></div>
+        </section>
+        <section class="data-panel">
+          <div class="panel-title">Canales</div>
+          <div class="panel-body">
+            <div class="channel-card"><div><b>Prestashop</b><span>articulos publicados</span></div><div class="value" id="cPresta">-</div></div>
+            <div class="channel-card"><div><b>BNA Producteca</b><span>articulos publicados</span></div><div class="value" id="cBna">-</div></div>
+            <div class="channel-card"><div><b>MercadoLibre</b><span>preparado para monitoreo</span></div><div class="value" id="cMl">-</div></div>
+          </div>
+        </section>
+      </aside>
+
+      <section class="data-panel" id="tablePanel">
+        <div class="table-head">
+          <div class="table-title">Articulos a revisar<small id="resultText">Cargando datos...</small></div>
+          <div class="view-options">
+            <button class="export-btn" id="exportExcel" type="button">Exportar Excel</button>
+            <label class="toggle"><input type="checkbox" id="compact" checked> Vista compacta</label>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Articulo</th>
+                <th>Estado</th>
+                <th>Canales</th>
+                <th>Disp. CD</th>
+                <th>Comp. CD</th>
+                <th>Disp. CA</th>
+                <th>Comp. CA</th>
+                <th>Total disp.</th>
+                <th>Comp. total</th>
+                <th>Ventas 30d</th>
+                <th>Rot/dia</th>
+                <th>Cobertura</th>
+                <th>Saldo Presta</th>
+                <th>Saldo Producteca</th>
+                <th>Dif Presta</th>
+                <th>Dif BNA</th>
+                <th>Act. Presta</th>
+                <th>L20 Web</th>
+                <th>L500 BNA</th>
+                <th class="optional">L501 BNA</th>
+                <th class="optional">L1 Contado</th>
+                <th class="optional">Fecha stock</th>
+              </tr>
+            </thead>
+            <tbody id="rows"><tr><td colspan="22" class="empty">Cargando CSV...</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+</div>
+
+<script>
+const state={rows:[],filtered:[]};
+const $=id=>document.getElementById(id);
+const num=v=>Number(String(v??"").replace(",",".")||0);
+const int=v=>num(v).toLocaleString("es-AR",{maximumFractionDigits:0});
+const money=v=>num(v)?num(v).toLocaleString("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0}):"-";
+const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const labels={
+  QUIEBRE:"Quiebre",
+  COBERTURA_BAJA:"Cobertura baja",
+  CANAL_MAYOR_A_TANGO:"Canal mayor a TANGO",
+  CANAL_SIN_STOCK:"Canal sin stock",
+  SIN_CANAL_DIGITAL:"Sin canal digital",
+  OK:"OK"
+};
+function parseCsv(text){
+  const lines=text.replace(/^\uFEFF/,"").split(/\r?\n/).filter(Boolean);
+  const split=line=>{const out=[];let cur="",q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'&&line[i+1]==='"'){cur+='"';i++}else if(ch==='"'){q=!q}else if(ch===";"&&!q){out.push(cur);cur=""}else cur+=ch}out.push(cur);return out};
+  const head=split(lines.shift());
+  return lines.map(l=>Object.fromEntries(split(l).map((v,i)=>[head[i],v])));
+}
+function badgeEstado(e){
+  const cls=e==="OK"?"good":e==="QUIEBRE"?"bad":e==="COBERTURA_BAJA"?"warn":e==="CANAL_MAYOR_A_TANGO"?"warn":e==="CANAL_SIN_STOCK"?"info":"neutral";
+  return `<span class="badge ${cls}">${esc(labels[e]||e)}</span>`;
+}
+function setQuick(value){
+  $("estado").value=value;
+  document.querySelectorAll(".quick").forEach(b=>b.classList.toggle("active",b.dataset.quick===value));
+  apply();
+}
+function apply(){
+  const q=$("q").value.trim().toLowerCase(), estado=$("estado").value, canal=$("canal").value;
+  document.querySelectorAll(".quick").forEach(b=>b.classList.toggle("active",b.dataset.quick===estado));
+  state.filtered=state.rows.filter(r=>{
+    const txt=[r.COD_ARTICU,r.Descripcion,r.Familia,r.Grupo,r.Codigo_Barra].join(" ").toLowerCase();
+    if(q&&!txt.includes(q))return false;
+    if(estado&&r.Estado_Monitoreo!==estado)return false;
+    if(canal==="prestashop"&&num(r.Publicado_Prestashop)!==1)return false;
+    if(canal==="bna"&&num(r.Publicado_BNA)!==1)return false;
+    if(canal==="ml"&&num(r.Publicado_MercadoLibre)!==1)return false;
+    return true;
+  });
+  render();
+}
+function countWhere(fn){return state.rows.filter(fn).length}
+function excelCell(v){return esc(v??"")}
+function exportExcel(){
+  const cols=[
+    ["COD_ARTICU","Codigo"],["Descripcion","Descripcion"],["Familia","Familia"],["Grupo","Grupo"],
+    ["Estado_Monitoreo","Estado"],["Publicado_Prestashop","Publicado Presta"],["Saldo_Prestashop","Saldo Presta"],
+    ["Saldo_Prestashop_Live","Saldo Presta API"],["Saldo_Prestashop_Nexo","Saldo Presta NEXO"],["Fuente_Saldo_Prestashop","Fuente Presta"],
+    ["Fecha_Consulta_Prestashop_Live","Consulta Presta API"],["Fecha_Prestashop","Fecha Presta NEXO"],["Dias_Sin_Actualizar_Prestashop","Dias sin act. Presta"],
+    ["Prestashop_Desactualizado","Presta desactualizado"],["Publicado_BNA","Publicado BNA"],
+    ["Saldo_BNA","Saldo BNA Producteca"],["Saldo_BNA_Nexo","Saldo BNA NEXO ref."],
+    ["Stock_Producteca_CD","Producteca CD"],["Stock_Producteca_SV","Producteca SV"],
+    ["Stock_Comprometido_Producteca","Comprometido BNA"],
+    ["Stock_Disponible_CD","Disponible CD"],["Stock_Comprometido_CD","Comprometido CD"],
+    ["Stock_Disponible_CA","Disponible CA"],["Stock_Comprometido_CA","Comprometido CA"],["Stock_Disponible_SV","Disponible SV"],
+    ["Saldo_Real","Total disponible"],["Stock_Comprometido_Total","Comprometido total"],
+    ["Ventas_Ultimos_30_Dias","Ventas 30 dias"],["Rotacion_Diaria","Rotacion diaria"],["Dias_Cobertura","Dias cobertura"],
+    ["Dif_Prestashop_vs_Real","Dif Presta"],["Dif_BNA_vs_Producteca","Dif BNA Producteca"],["Dif_BNA_Nexo_vs_Producteca","Dif BNA NEXO ref."],
+    ["Precio_Lista_20_Web","L20 Web"],["Precio_Lista_500_BNA_18CSI","L500 BNA"],["Precio_Lista_501_BNA_EFICI","L501 BNA"],
+    ["Fecha_Stock","Fecha stock"],["Fecha_Exportacion","Fecha exportacion"]
+  ];
+  const rows=state.filtered.length?state.filtered:state.rows;
+  const head=cols.map(c=>`<th>${excelCell(c[1])}</th>`).join("");
+  const body=rows.map(r=>`<tr>${cols.map(c=>`<td>${excelCell(r[c[0]])}</td>`).join("")}</tr>`).join("");
+  const html=`<!doctype html><html><head><meta charset="utf-8"></head><body><table border="1"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></body></html>`;
+  const blob=new Blob([html],{type:"application/vnd.ms-excel;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=`chemes_canales_digitales_${new Date().toISOString().slice(0,10)}.xls`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+function render(){
+  const rows=state.filtered;
+  const total=state.rows.length;
+  $("kTotal").textContent=int(total);
+  $("kPresta").textContent=int(countWhere(r=>num(r.Publicado_Prestashop)===1));
+  $("kBna").textContent=int(countWhere(r=>num(r.Publicado_BNA)===1));
+  $("kQuiebre").textContent=int(countWhere(r=>r.Estado_Monitoreo==="QUIEBRE"));
+  $("kCobertura").textContent=int(countWhere(r=>r.Estado_Monitoreo==="COBERTURA_BAJA"));
+  $("kDif").textContent=int(countWhere(r=>r.Estado_Monitoreo==="CANAL_MAYOR_A_TANGO"));
+  $("cPresta").textContent=int(countWhere(r=>num(r.Publicado_Prestashop)===1));
+  $("cBna").textContent=int(countWhere(r=>num(r.Publicado_BNA)===1));
+  $("cMl").textContent=int(countWhere(r=>num(r.Publicado_MercadoLibre)===1));
+
+  const groups=["QUIEBRE","COBERTURA_BAJA","CANAL_MAYOR_A_TANGO","CANAL_SIN_STOCK","SIN_CANAL_DIGITAL","OK"];
+  $("summary").innerHTML=groups.map(g=>`<div class="metric-row"><span>${badgeEstado(g)}</span><b>${int(countWhere(r=>r.Estado_Monitoreo===g))}</b></div>`).join("");
+  $("resultText").textContent=`${int(rows.length)} de ${int(total)} articulos visibles`;
+
+  const first=state.rows[0];
+  if(first?.Fecha_Exportacion){
+    $("stamp").textContent=`Ultima exportacion: ${first.Fecha_Exportacion}`;
+    $("refreshText").textContent=first.Fecha_Exportacion;
+  }
+  const quiebre=countWhere(r=>r.Estado_Monitoreo==="QUIEBRE");
+  const cobertura=countWhere(r=>r.Estado_Monitoreo==="COBERTURA_BAJA");
+  const dif=countWhere(r=>r.Estado_Monitoreo==="CANAL_MAYOR_A_TANGO");
+  $("focusText").textContent=quiebre ? `Prioridad: ${int(quiebre)} articulos con posible quiebre de stock.` : cobertura ? `Prioridad: ${int(cobertura)} articulos con menos de 7 dias de cobertura.` : dif ? `Prioridad: ${int(dif)} diferencias de saldo entre canal y TANGO.` : "Sin alertas criticas en la vista actual.";
+
+  if(!rows.length){$("rows").innerHTML=`<tr><td colspan="22" class="empty">Sin datos para el filtro actual</td></tr>`;return}
+  $("rows").innerHTML=rows.slice(0,1000).map(r=>{
+    const dp=num(r.Dif_Prestashop_vs_Real), db=num(r.Dif_BNA_vs_Producteca), real=num(r.Saldo_Real), saldoBna=num(r.Saldo_BNA);
+    const cd=num(r.Stock_Disponible_CD), ca=num(r.Stock_Disponible_CA), compCd=num(r.Stock_Comprometido_CD), compCa=num(r.Stock_Comprometido_CA), compTotal=num(r.Stock_Comprometido_Total), ventas30=num(r.Ventas_Ultimos_30_Dias), rot=num(r.Rotacion_Diaria), cobertura=num(r.Dias_Cobertura);
+    const psOld=num(r.Prestashop_Desactualizado)===1, psDias=num(r.Dias_Sin_Actualizar_Prestashop), psApi=r.Fuente_Saldo_Prestashop==="PRESTASHOP_API";
+    const channels=`<div class="chan"><span class="pill ${num(r.Publicado_Prestashop)?"on":""}">PS</span><span class="pill ${num(r.Publicado_BNA)?"on":""}">BNA</span><span class="pill ${num(r.Publicado_MercadoLibre)?"on":""}">ML</span></div>`;
+    return `<tr>
+      <td class="article">
+        <div class="code">${esc(r.COD_ARTICU)}</div>
+        <div class="name" title="${esc(r.Descripcion)}">${esc(r.Descripcion)}</div>
+        <div class="meta">${esc(r.Familia||r.Grupo||r.Codigo_Barra||"Sin familia")}</div>
+      </td>
+      <td>${badgeEstado(r.Estado_Monitoreo)}</td>
+      <td>${channels}</td>
+      <td class="stock ${cd<=0?"zero":""}">${int(cd)}</td>
+      <td>${int(compCd)}</td>
+      <td class="stock ${ca<=0?"zero":""}">${int(ca)}</td>
+      <td>${int(compCa)}</td>
+      <td class="stock ${real<=0?"zero":""}">${int(real)}</td>
+      <td>${int(compTotal)}</td>
+      <td>${int(ventas30)}</td>
+      <td>${rot.toLocaleString("es-AR",{maximumFractionDigits:2})}</td>
+      <td class="diff ${ventas30>0&&cobertura<=7?"warntext":""}">${ventas30>0?int(cobertura)+" dias":"-"}</td>
+      <td>${int(r.Saldo_Prestashop)}</td>
+      <td class="stock ${saldoBna<=0?"zero":""}" title="Regla Producteca: CD + SV sucursal 100, neto de comprometido">${int(saldoBna)}</td>
+      <td class="diff ${dp>0?"badtext":dp<0?"warntext":""}">${int(dp)}</td>
+      <td class="diff ${db>0?"badtext":db<0?"warntext":""}">${int(db)}</td>
+      <td class="diff ${psOld?"warntext":""}" title="${esc(psApi?`API: ${r.Fecha_Consulta_Prestashop_Live||"-"} | NEXO: ${r.Fecha_Prestashop||"-"}`:(r.Fecha_Prestashop||"-"))}">${num(r.Publicado_Prestashop)?(psApi?"API":(psOld?`${int(psDias)} dias`:"OK")):"-"}</td>
+      <td class="money">${money(r.Precio_Lista_20_Web)}</td>
+      <td class="money">${money(r.Precio_Lista_500_BNA_18CSI)}</td>
+      <td class="money optional">${money(r.Precio_Lista_501_BNA_EFICI)}</td>
+      <td class="money optional">${money(r.Precio_Lista_1_Contado)}</td>
+      <td class="prices-muted optional">${esc(r.Fecha_Stock||"-")}</td>
+    </tr>`;
+  }).join("");
+}
+async function boot(){
+  try{
+    const res=await fetch("out/canales_articulos_publicados.csv",{cache:"no-store"});
+    if(!res.ok)throw new Error("HTTP "+res.status);
+    state.rows=parseCsv(await res.text());
+    apply();
+  }catch(e){
+    $("rows").innerHTML=`<tr><td colspan="22" class="empty">No se pudo leer out/canales_articulos_publicados.csv</td></tr>`;
+    $("resultText").textContent="CSV no disponible";
+  }
+}
+["q","estado","canal"].forEach(id=>$(id).addEventListener("input",apply));
+document.querySelectorAll(".quick").forEach(btn=>btn.addEventListener("click",()=>setQuick(btn.dataset.quick)));
+$("compact").addEventListener("change",e=>$("tablePanel").classList.toggle("compact",e.target.checked));
+$("exportExcel").addEventListener("click",exportExcel);
+$("tablePanel").classList.add("compact");
+boot();
+</script>
+</body>
+</html>
