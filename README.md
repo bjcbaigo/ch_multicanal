@@ -11,4 +11,6 @@ Incluye:
 
 El proyecto principal esta en `outputs/panel_canales_digitales`.
 
+Acceso directo local/GitHub Pages: `index.html`.
+
 No se versionan credenciales ni archivos generados. Configurar las variables/archivos secretos en el servidor antes de ejecutar los scripts de refresh.
