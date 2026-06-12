@@ -16,3 +16,5 @@ outputs/panel_canales_digitales/.config/
 *.rar
 LLAVE.txt
 llave.txt
+prestashop_imagenes*/
+outputs/panel_canales_digitales/assets/productos/
