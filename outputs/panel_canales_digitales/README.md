@@ -52,6 +52,8 @@ La tabla usa encabezados abreviados para reducir scroll horizontal:
 
 El deposito `50` se muestra para visibilidad, pero la regla vigente de `T. DISPO.` y cobertura continua basada en `CD + CA` salvo cambio funcional posterior.
 
+El filtro `BNA Producteca` incluye articulos publicados/vinculados en BNA y tambien articulos con saldo Producteca calculado. Por eso puede mostrar articulos donde `Publicado_BNA` sea `0`, siempre que exista informacion en `PRODUC`.
+
 ## Uso
 
 1. Exportar datos:

@@ -22,7 +22,7 @@ La parte superior resume la situacion general:
 - `Cobertura baja`: articulos con ventas recientes y pocos dias de cobertura.
 - `Canal mayor a TANGO`: articulos donde algun canal informa mas stock que el disponible de referencia.
 - `Prestashop`: cantidad de articulos publicados en Prestashop.
-- `BNA Producteca`: cantidad de articulos publicados en BNA/Producteca.
+- `BNA Producteca`: cantidad de articulos con informacion Producteca/BNA disponible en el panel. Puede incluir articulos con saldo calculado por la regla Producteca aunque no esten marcados como publicados por la relacion NEXO.
 
 La fecha de `Ultima exportacion` indica cuando fue actualizada la informacion.
 
@@ -61,6 +61,8 @@ Cada fila representa un articulo. Las columnas principales son:
 
 Las columnas de diferencias ayudan a detectar rapidamente desalineaciones entre canal y referencia.
 
+Cuando se filtra por `BNA Producteca`, el panel muestra articulos con informacion Producteca: publicados/vinculados en BNA o con saldo calculado por la regla Producteca. Esto evita ocultar articulos que tienen saldo Producteca aunque no figuren como publicados en la relacion NEXO.
+
 ## Como interpretar los estados
 
 - `OK`: no se detecta alerta principal para el articulo.
@@ -83,4 +85,3 @@ Las columnas de diferencias ayudan a detectar rapidamente desalineaciones entre 
 El boton `Exportar Excel` descarga la vista actual. Si hay filtros aplicados, se exportan los articulos filtrados; si no hay filtros, se exporta el conjunto completo.
 
 El archivo exportado conserva columnas tecnicas adicionales para auditoria, como fechas de consulta, fuente del saldo y datos de precios.
-

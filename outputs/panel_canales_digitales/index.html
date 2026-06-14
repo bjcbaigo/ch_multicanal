@@ -275,6 +275,9 @@ function productThumb(r){
   const fallbackAttr=fallback ? ` data-fallback="${esc(fallback)}"` : "";
   return `<img class="thumb" src="${esc(url)}" alt="${esc(sku)}" loading="lazy"${fallbackAttr} onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.outerHTML='<div class=&quot;thumb-missing&quot;>SIN</div>'}">`;
 }
+function hasProductecaData(r){
+  return num(r.Publicado_BNA)===1 || num(r.Saldo_BNA)!==0 || num(r.Stock_Producteca_Total)!==0 || num(r.Stock_Comprometido_Producteca)!==0;
+}
 function setQuick(value){
   $("estado").value=value;
   document.querySelectorAll(".quick").forEach(b=>b.classList.toggle("active",b.dataset.quick===value));
@@ -288,7 +291,7 @@ function apply(){
     if(q&&!txt.includes(q))return false;
     if(estado&&r.Estado_Monitoreo!==estado)return false;
     if(canal==="prestashop"&&num(r.Publicado_Prestashop)!==1)return false;
-    if(canal==="bna"&&num(r.Publicado_BNA)!==1)return false;
+    if(canal==="bna"&&!hasProductecaData(r))return false;
     if(canal==="ml"&&num(r.Publicado_MercadoLibre)!==1)return false;
     return true;
   });
@@ -350,12 +353,12 @@ function render(){
   const total=state.rows.length;
   $("kTotal").textContent=int(total);
   $("kPresta").textContent=int(countWhere(r=>num(r.Publicado_Prestashop)===1));
-  $("kBna").textContent=int(countWhere(r=>num(r.Publicado_BNA)===1));
+  $("kBna").textContent=int(countWhere(hasProductecaData));
   $("kQuiebre").textContent=int(countWhere(r=>r.Estado_Monitoreo==="QUIEBRE"));
   $("kCobertura").textContent=int(countWhere(r=>r.Estado_Monitoreo==="COBERTURA_BAJA"));
   $("kDif").textContent=int(countWhere(r=>r.Estado_Monitoreo==="CANAL_MAYOR_A_TANGO"));
   $("cPresta").textContent=int(countWhere(r=>num(r.Publicado_Prestashop)===1));
-  $("cBna").textContent=int(countWhere(r=>num(r.Publicado_BNA)===1));
+  $("cBna").textContent=int(countWhere(hasProductecaData));
   $("cMl").textContent=int(countWhere(r=>num(r.Publicado_MercadoLibre)===1));
 
   $("resultText").textContent=`${int(rows.length)} de ${int(total)} articulos visibles`;
@@ -392,7 +395,7 @@ function render(){
     const psOld=num(r.Prestashop_Desactualizado)===1, psDias=num(r.Dias_Sin_Actualizar_Prestashop), psApi=r.Fuente_Saldo_Prestashop==="PRESTASHOP_API";
     const channels=`<div class="chan">
       <span class="channel-pill chemes ${num(r.Publicado_Prestashop)?"on":""}" title="Prestashop / Chemes Web"><img src="assets/canales/chemes-web.png" alt="Prestashop"></span>
-      <span class="channel-pill producteca ${num(r.Publicado_BNA)?"on":""}" title="BNA Producteca"><img src="assets/canales/producteca.png" alt="BNA Producteca"></span>
+      <span class="channel-pill producteca ${hasProductecaData(r)?"on":""}" title="BNA Producteca: saldo calculado por regla CD + SV"><img src="assets/canales/producteca.png" alt="BNA Producteca"></span>
       <span class="channel-pill ml ${num(r.Publicado_MercadoLibre)?"on":""}" title="Mercado Libre"><img src="assets/canales/mercadolibre.png" alt="Mercado Libre"></span>
       <span class="channel-pill tango on" title="TANGO referencia"><img src="assets/canales/tango.png" alt="TANGO"></span>
     </div>`;

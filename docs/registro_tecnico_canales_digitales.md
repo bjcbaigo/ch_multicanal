@@ -74,6 +74,14 @@ if ((obj.WarehouseCode == "CD" || obj.WarehouseCode == "SV") && obj.StoreNumber 
 
 Por eso `SV` no se muestra como columna operativa en el panel, pero sigue siendo parte del calculo de `PRODUC`.
 
+El filtro visual `BNA Producteca` no se limita a `Publicado_BNA = 1`. Tambien incluye articulos con informacion Producteca calculada:
+
+- `Saldo_BNA <> 0`
+- `Stock_Producteca_Total <> 0`
+- `Stock_Comprometido_Producteca <> 0`
+
+Esto corrige casos donde el articulo no esta vinculado como publicado por NEXO, pero Producteca igualmente tiene saldo calculado por la regla del integrador.
+
 ## Prestashop
 
 Prestashop se lee contra API directa cuando la extraccion esta habilitada. El panel distingue la fuente en columnas internas y exportacion:
@@ -121,4 +129,3 @@ Para sumar un canal nuevo conviene seguir esta secuencia:
 - Usar logos de canales en lugar de siglas cuando sea posible.
 - Mantener encabezados abreviados para reducir scroll horizontal.
 - Exportar a Excel la vista filtrada para trabajo entre areas.
-
