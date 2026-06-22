@@ -67,6 +67,7 @@ Cuando se filtra por `BNA Producteca`, el panel muestra articulos con informacio
 
 - `OK`: no se detecta alerta principal para el articulo.
 - `Quiebre`: el canal puede vender, pero el stock de referencia no acompana.
+- `Saldo negativo`: hay un saldo menor a cero en Prestashop, Producteca o alguno de los depositos visibles. Es una alerta de consistencia de datos.
 - `Cobertura baja`: hay ventas recientes y la cobertura estimada es menor o igual a 7 dias.
 - `Canal mayor a TANGO`: el canal informa mas stock que la referencia de TANGO.
 - `Canal sin stock`: TANGO tiene disponible, pero el canal esta informando stock cero.

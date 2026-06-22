@@ -31,10 +31,14 @@ function Get-MonitorState {
   $saldoProducteca = To-Decimal $Row.Stock_Producteca_Total
   $saldoPresta = To-Decimal $Row.Saldo_Prestashop
   $saldoBna = To-Decimal $Row.Saldo_BNA
+  $stockCd = To-Decimal $Row.Stock_Disponible_CD
+  $stockCa = To-Decimal $Row.Stock_Disponible_CA
+  $stockColch = To-Decimal $Row.Stock_Disponible_50
   $ventas30 = To-Decimal $Row.Ventas_Ultimos_30_Dias
   $publicadoPresta = [string]$Row.Publicado_Prestashop -eq "1"
   $publicadoBna = [string]$Row.Publicado_BNA -eq "1"
 
+  if ($saldoPresta -lt 0 -or $saldoProducteca -lt 0 -or $saldoReal -lt 0 -or $stockCd -lt 0 -or $stockCa -lt 0 -or $stockColch -lt 0) { return "SALDO_NEGATIVO" }
   if (!$publicadoPresta -and !$publicadoBna) { return "SIN_CANAL_DIGITAL" }
   if (($saldoReal -le 0 -and $saldoPresta -gt 0) -or ($publicadoBna -and $saldoProducteca -le 0)) { return "QUIEBRE" }
   if ($ventas30 -gt 0 -and $saldoReal -gt 0 -and ($saldoReal / ($ventas30 / 30)) -le 7) { return "COBERTURA_BAJA" }

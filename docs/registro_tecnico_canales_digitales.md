@@ -93,6 +93,19 @@ Prestashop se lee contra API directa cuando la extraccion esta habilitada. El pa
 
 La diferencia `Dif Presta` compara `PRESTA` contra la referencia disponible, evitando tomar saldos negativos como disponibilidad real.
 
+## Estado saldo negativo
+
+El estado `SALDO_NEGATIVO` se usa para evitar que articulos con saldos bajo cero queden como `OK`. Aplica cuando cualquiera de estos valores es menor a cero:
+
+- `Saldo_Prestashop`
+- `Stock_Producteca_Total`
+- `Saldo_Real`
+- `Stock_Disponible_CD`
+- `Stock_Disponible_CA`
+- `Stock_Disponible_50`
+
+Ejemplo: si Prestashop informa `-4` y TANGO tiene `0`, no corresponde `QUIEBRE` porque el canal no informa stock positivo, pero tampoco corresponde `OK`. En ese caso se clasifica como `SALDO_NEGATIVO` para revision operativa.
+
 ## Imagenes de productos
 
 El panel intenta cargar imagen local por SKU:

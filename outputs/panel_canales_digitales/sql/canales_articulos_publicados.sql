@@ -204,6 +204,12 @@ SELECT
   ) AS Dias_Cobertura,
 
   CASE
+    WHEN ISNULL(c.Saldo_Prestashop, 0) < 0
+      OR ISNULL(s.Stock_Producteca_Total, 0) < 0
+      OR ISNULL(s.Saldo_Real, 0) < 0
+      OR ISNULL(s.Stock_Disponible_CD, 0) < 0
+      OR ISNULL(s.Stock_Disponible_CA, 0) < 0
+      OR ISNULL(s.Stock_Disponible_50, 0) < 0 THEN 'SALDO_NEGATIVO'
     WHEN ISNULL(c.Publicado_Prestashop, 0) = 0 AND ISNULL(c.Publicado_BNA, 0) = 0 THEN 'SIN_CANAL_DIGITAL'
     WHEN (ISNULL(s.Saldo_Real, 0) <= 0 AND ISNULL(c.Saldo_Prestashop, 0) > 0)
       OR (ISNULL(c.Publicado_BNA, 0) = 1 AND ISNULL(s.Stock_Producteca_Total, 0) <= 0) THEN 'QUIEBRE'
@@ -225,11 +231,17 @@ WHERE
   OR ISNULL(c.Publicado_MercadoLibre, 0) = 1
 ORDER BY
   CASE
+    WHEN ISNULL(c.Saldo_Prestashop, 0) < 0
+      OR ISNULL(s.Stock_Producteca_Total, 0) < 0
+      OR ISNULL(s.Saldo_Real, 0) < 0
+      OR ISNULL(s.Stock_Disponible_CD, 0) < 0
+      OR ISNULL(s.Stock_Disponible_CA, 0) < 0
+      OR ISNULL(s.Stock_Disponible_50, 0) < 0 THEN 1
     WHEN (ISNULL(s.Saldo_Real, 0) <= 0 AND ISNULL(c.Saldo_Prestashop, 0) > 0)
-      OR (ISNULL(c.Publicado_BNA, 0) = 1 AND ISNULL(s.Stock_Producteca_Total, 0) <= 0) THEN 1
-    WHEN ISNULL(v.Ventas_Ultimos_30_Dias, 0) > 0 AND ISNULL(s.Saldo_Real, 0) > 0 AND ISNULL(s.Saldo_Real, 0) / (ISNULL(v.Ventas_Ultimos_30_Dias, 0) / 30.0) <= 7 THEN 2
-    WHEN ISNULL(c.Saldo_Prestashop, 0) > ISNULL(s.Saldo_Real, 0) THEN 3
-    WHEN ISNULL(c.Publicado_Prestashop, 0) = 0 AND ISNULL(c.Publicado_BNA, 0) = 0 THEN 4
+      OR (ISNULL(c.Publicado_BNA, 0) = 1 AND ISNULL(s.Stock_Producteca_Total, 0) <= 0) THEN 2
+    WHEN ISNULL(v.Ventas_Ultimos_30_Dias, 0) > 0 AND ISNULL(s.Saldo_Real, 0) > 0 AND ISNULL(s.Saldo_Real, 0) / (ISNULL(v.Ventas_Ultimos_30_Dias, 0) / 30.0) <= 7 THEN 3
+    WHEN ISNULL(c.Saldo_Prestashop, 0) > ISNULL(s.Saldo_Real, 0) THEN 4
+    WHEN ISNULL(c.Publicado_Prestashop, 0) = 0 AND ISNULL(c.Publicado_BNA, 0) = 0 THEN 5
     ELSE 5
   END,
   a.COD_ARTICU;

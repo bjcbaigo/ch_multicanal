@@ -66,7 +66,7 @@ button,input,select{font:inherit}
 .priority-strip b{color:var(--red)}
 .priority-strip span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .health-strip{display:grid;grid-template-columns:86px minmax(0,1fr) auto;gap:18px;align-items:center;padding:16px 20px;border-bottom:1px solid rgba(13,143,209,.22);background:linear-gradient(135deg,#5cc5e6 0%,#dff6ff 56%,#f7fdff 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
-.donut{width:76px;height:76px;border-radius:50%;background:conic-gradient(var(--red) 0deg,var(--red) var(--q),#f59e0b var(--q),#f59e0b var(--c),var(--violet) var(--c),var(--violet) var(--d),var(--blue) var(--d),var(--blue) var(--s),#22c55e var(--s),#22c55e 360deg);display:flex;align-items:center;justify-content:center;position:relative}
+.donut{width:76px;height:76px;border-radius:50%;background:conic-gradient(var(--red) 0deg,var(--red) var(--q),#991b1b var(--q),#991b1b var(--n),#f59e0b var(--n),#f59e0b var(--c),var(--violet) var(--c),var(--violet) var(--d),var(--blue) var(--d),var(--blue) var(--s),#22c55e var(--s),#22c55e 360deg);display:flex;align-items:center;justify-content:center;position:relative}
 .donut::after{content:"";position:absolute;width:50px;height:50px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--line2)}
 .donut-center{position:relative;z-index:1;text-align:center;line-height:1.05}.donut-center b{display:block;font-size:13px;font-weight:560;color:var(--text)}.donut-center span{font-size:10px;color:var(--muted)}
 .health-legend{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
@@ -115,6 +115,7 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
         <select class="select" id="estado">
           <option value="">Todos los estados</option>
           <option>QUIEBRE</option>
+          <option>SALDO_NEGATIVO</option>
           <option>COBERTURA_BAJA</option>
           <option>CANAL_MAYOR_A_TANGO</option>
           <option>CANAL_SIN_STOCK</option>
@@ -153,6 +154,7 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
         <div class="quick-actions">
           <button class="quick active" data-quick="">Todo<small>vista completa</small></button>
           <button class="quick" data-quick="QUIEBRE">Quiebres<small>stock en canal y TANGO cero</small></button>
+          <button class="quick" data-quick="SALDO_NEGATIVO">Saldos negativos<small>canal o deposito bajo cero</small></button>
           <button class="quick" data-quick="COBERTURA_BAJA">Cobertura baja<small>menos de 7 dias de stock</small></button>
           <button class="quick" data-quick="CANAL_MAYOR_A_TANGO">Diferencias<small>canal informa mas stock</small></button>
           <button class="quick" data-quick="CANAL_SIN_STOCK">Canal sin stock<small>TANGO tiene saldo</small></button>
@@ -170,7 +172,7 @@ tbody tr:hover td{background:#fbfdff}tbody tr:hover td:first-child{background:#f
           </div>
         </div>
         <div class="health-strip">
-          <div class="donut" id="healthDonut" style="--q:0deg;--c:0deg;--d:0deg;--s:0deg">
+          <div class="donut" id="healthDonut" style="--q:0deg;--n:0deg;--c:0deg;--d:0deg;--s:0deg">
             <div class="donut-center"><b id="donutTotal">-</b><span>totales</span></div>
           </div>
           <div class="health-legend" id="healthLegend"></div>
@@ -230,6 +232,7 @@ const money=v=>num(v)?num(v).toLocaleString("es-AR",{style:"currency",currency:"
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const labels={
   QUIEBRE:"Quiebre",
+  SALDO_NEGATIVO:"Saldo negativo",
   COBERTURA_BAJA:"Cobertura baja",
   CANAL_MAYOR_A_TANGO:"Canal mayor a TANGO",
   CANAL_SIN_STOCK:"Canal sin stock",
@@ -260,7 +263,7 @@ function loadJsonp(url){
   });
 }
 function badgeEstado(e){
-  const cls=e==="OK"?"good":e==="QUIEBRE"?"bad":e==="COBERTURA_BAJA"?"warn":e==="CANAL_MAYOR_A_TANGO"?"warn":e==="CANAL_SIN_STOCK"?"info":"neutral";
+  const cls=e==="OK"?"good":e==="QUIEBRE"?"bad":e==="SALDO_NEGATIVO"?"bad":e==="COBERTURA_BAJA"?"warn":e==="CANAL_MAYOR_A_TANGO"?"warn":e==="CANAL_SIN_STOCK"?"info":"neutral";
   return `<span class="badge ${cls}">${esc(labels[e]||e)}</span>`;
 }
 function productImageUrl(sku){
@@ -366,15 +369,16 @@ function render(){
 
   const visibleTotal=Math.max(rows.length,1);
   const q=visibleCountWhere(rows,r=>r.Estado_Monitoreo==="QUIEBRE");
+  const neg=visibleCountWhere(rows,r=>r.Estado_Monitoreo==="SALDO_NEGATIVO");
   const cb=visibleCountWhere(rows,r=>r.Estado_Monitoreo==="COBERTURA_BAJA");
   const dm=visibleCountWhere(rows,r=>r.Estado_Monitoreo==="CANAL_MAYOR_A_TANGO");
   const ss=visibleCountWhere(rows,r=>r.Estado_Monitoreo==="CANAL_SIN_STOCK");
   const ok=visibleCountWhere(rows,r=>r.Estado_Monitoreo==="OK");
-  const a1=q/visibleTotal*360, a2=(q+cb)/visibleTotal*360, a3=(q+cb+dm)/visibleTotal*360, a4=(q+cb+dm+ss)/visibleTotal*360;
-  $("healthDonut").style.cssText=`--q:${a1}deg;--c:${a2}deg;--d:${a3}deg;--s:${a4}deg`;
-  $("donutTotal").textContent=int(q+cb+dm+ss+ok);
+  const a1=q/visibleTotal*360, a2=(q+neg)/visibleTotal*360, a3=(q+neg+cb)/visibleTotal*360, a4=(q+neg+cb+dm)/visibleTotal*360, a5=(q+neg+cb+dm+ss)/visibleTotal*360;
+  $("healthDonut").style.cssText=`--q:${a1}deg;--n:${a2}deg;--c:${a3}deg;--d:${a4}deg;--s:${a5}deg`;
+  $("donutTotal").textContent=int(q+neg+cb+dm+ss+ok);
   $("healthLegend").innerHTML=[
-    ["#dc2626",q,"Quiebre"],["#f59e0b",cb,"Cobertura baja"],["#7c3aed",dm,"Canal > TANGO"],["#0ea5e9",ss,"Sin stock"],["#22c55e",ok,"OK"]
+    ["#dc2626",q,"Quiebre"],["#991b1b",neg,"Saldo negativo"],["#f59e0b",cb,"Cobertura baja"],["#7c3aed",dm,"Canal > TANGO"],["#0ea5e9",ss,"Sin stock"],["#22c55e",ok,"OK"]
   ].map(x=>`<span class="legend-item"><i class="legend-dot" style="--dot:${x[0]}"></i><b>${int(x[1])}</b>${x[2]}</span>`).join("");
 
   const first=state.rows[0];
@@ -383,10 +387,11 @@ function render(){
     $("refreshText").textContent=first.Fecha_Exportacion;
   }
   const quiebre=countWhere(r=>r.Estado_Monitoreo==="QUIEBRE");
+  const negativo=countWhere(r=>r.Estado_Monitoreo==="SALDO_NEGATIVO");
   const cobertura=countWhere(r=>r.Estado_Monitoreo==="COBERTURA_BAJA");
   const dif=countWhere(r=>r.Estado_Monitoreo==="CANAL_MAYOR_A_TANGO");
-  $("focusText").textContent=quiebre ? `Prioridad: ${int(quiebre)} articulos con posible quiebre de stock.` : cobertura ? `Prioridad: ${int(cobertura)} articulos con menos de 7 dias de cobertura.` : dif ? `Prioridad: ${int(dif)} diferencias de saldo entre canal y TANGO.` : "Sin alertas criticas en la vista actual.";
-  $("priorityStrip").innerHTML=quiebre ? `<span><b>Prioridad:</b> ${int(quiebre)} articulos con posible quiebre de stock.</span><span>&rsaquo;</span>` : cobertura ? `<span><b>Prioridad:</b> ${int(cobertura)} articulos con menos de 7 dias de cobertura.</span><span>&rsaquo;</span>` : dif ? `<span><b>Prioridad:</b> ${int(dif)} diferencias de saldo entre canal y TANGO.</span><span>&rsaquo;</span>` : `<span><b>Prioridad:</b> Sin alertas criticas en la vista actual.</span><span>&rsaquo;</span>`;
+  $("focusText").textContent=quiebre ? `Prioridad: ${int(quiebre)} articulos con posible quiebre de stock.` : negativo ? `Prioridad: ${int(negativo)} articulos con saldos negativos.` : cobertura ? `Prioridad: ${int(cobertura)} articulos con menos de 7 dias de cobertura.` : dif ? `Prioridad: ${int(dif)} diferencias de saldo entre canal y TANGO.` : "Sin alertas criticas en la vista actual.";
+  $("priorityStrip").innerHTML=quiebre ? `<span><b>Prioridad:</b> ${int(quiebre)} articulos con posible quiebre de stock.</span><span>&rsaquo;</span>` : negativo ? `<span><b>Prioridad:</b> ${int(negativo)} articulos con saldos negativos.</span><span>&rsaquo;</span>` : cobertura ? `<span><b>Prioridad:</b> ${int(cobertura)} articulos con menos de 7 dias de cobertura.</span><span>&rsaquo;</span>` : dif ? `<span><b>Prioridad:</b> ${int(dif)} diferencias de saldo entre canal y TANGO.</span><span>&rsaquo;</span>` : `<span><b>Prioridad:</b> Sin alertas criticas en la vista actual.</span><span>&rsaquo;</span>`;
 
   if(!rows.length){$("rows").innerHTML=`<tr><td colspan="24" class="empty">Sin datos para el filtro actual</td></tr>`;return}
   $("rows").innerHTML=rows.slice(0,1000).map(r=>{

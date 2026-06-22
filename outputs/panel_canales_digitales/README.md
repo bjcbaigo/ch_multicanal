@@ -54,6 +54,8 @@ El deposito `50` se muestra para visibilidad, pero la regla vigente de `T. DISPO
 
 El filtro `BNA Producteca` incluye articulos publicados/vinculados en BNA y tambien articulos con saldo Producteca calculado. Por eso puede mostrar articulos donde `Publicado_BNA` sea `0`, siempre que exista informacion en `PRODUC`.
 
+El estado `SALDO_NEGATIVO` identifica articulos con saldos bajo cero en Prestashop, Producteca o depositos visibles. Estos casos no deben quedar como `OK`, aunque no representen un quiebre por stock positivo en canal.
+
 ## Uso
 
 1. Exportar datos:
